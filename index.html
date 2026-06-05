@@ -6,34 +6,26 @@
 <title>WorkOrder</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap');
-:root {
-  --bg:#fff; --surface:#f5f5f5; --surface2:#eee; --border:#e0e0e0;
-  --text:#111; --muted:#888; --radius:12px;
-  --blue:#6b7fa3; --blue-bg:rgba(107,127,163,0.08); --blue-border:rgba(107,127,163,0.35);
-  --good:#2e7d32; --danger:#c62828; --warn:#e65100;
+:root{
+  --bg:#fff;--surface:#f5f5f5;--surface2:#eee;--border:#e0e0e0;
+  --text:#111;--muted:#888;--radius:12px;
+  --blue:#6b7fa3;--blue-bg:rgba(107,127,163,0.08);--blue-border:rgba(107,127,163,0.35);
+  --good:#2e7d32;--danger:#c62828;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center}
 #app{width:100%;max-width:480px;height:100%;display:flex;flex-direction:column}
-
-/* ── Header ── */
 .header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;flex-shrink:0;border-bottom:1px solid var(--border)}
 .logo{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);letter-spacing:.15em;text-transform:uppercase;cursor:pointer;background:none;border:none;padding:0}
-.logo:hover{opacity:.7}
 .icon-btn{background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;padding:5px 9px;font-size:14px;transition:all .15s;line-height:1}
 .icon-btn:hover{border-color:#111;color:#111}
 .session-info{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:right;line-height:1.5}
-
-/* ── Screens ── */
 .screen{display:none;flex-direction:column;flex:1;padding:0 20px 20px;overflow:hidden}
 .screen.active{display:flex;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .screen-title{font-size:20px;font-weight:700;margin-bottom:14px;flex-shrink:0;color:var(--blue)}
-
-/* ── Form basics ── */
 .field-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:5px;display:block}
-.field-group{display:flex;flex-direction:column;gap:5px;flex-shrink:0}
 .fi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;width:100%;outline:none;transition:border-color .15s;appearance:none}
 .fi:focus{border-color:var(--blue)}
 .fi::placeholder{color:#bbb}
@@ -41,69 +33,57 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .sw{position:relative}
 .sw::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:11px}
 .gap{flex-shrink:0}
-
-/* ── Buttons ── */
 .btn{padding:12px 18px;border-radius:var(--radius);border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;width:100%}
 .btn-primary{background:var(--blue);color:#fff}
 .btn-primary:hover{background:#57698a}
 .btn-primary:active{transform:scale(.98)}
 .btn-secondary{background:#fff;color:#111;border:1px solid #d0d0d0}
 .btn-secondary:hover{background:var(--surface)}
-.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0}
-
-/* ── Scrollable list ── */
 .list-area{flex:1;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:9px;padding-bottom:4px;touch-action:pan-y}
 .list-area::-webkit-scrollbar{width:3px}
 .list-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-/* ── Toast ── */
 .toast{display:flex;align-items:center;gap:8px;padding:10px 13px;border-radius:var(--radius);border:1px solid var(--border);font-size:13px;flex-shrink:0}
 .toast.sending{background:#fffde7;border-color:#f9a825;color:#e65100}
 .toast.sent{background:#e8f5e9;border-color:#388e3c;color:var(--good)}
 .toast.failed{background:#ffebee;border-color:#c62828;color:var(--danger)}
 .spinner{width:14px;height:14px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;opacity:.6}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── Tab bar with swipe ── */
 .tab-bar{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;margin-bottom:12px}
 .tab-btn{flex:1;padding:10px 4px;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
 .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
 .tab-panels{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .tab-panel{display:none;flex-direction:column;flex:1;overflow:hidden}
 .tab-panel.active{display:flex}
-
-/* ── Job Card ── */
-.job-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;flex-direction:row;gap:0;flex-shrink:0;min-height:108px;align-items:stretch}
+/* Job card */
+.job-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);flex-shrink:0;display:flex;flex-direction:column;padding:0;overflow:hidden}
 .job-card:hover{border-color:#bbb}
-.jc-left{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0;padding-right:10px}
+.jc-top{display:flex;flex-direction:row;align-items:stretch;padding:12px 12px 10px}
+.jc-left{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0;padding-right:10px;cursor:pointer}
+.jc-divider{width:1px;background:var(--border);flex-shrink:0;margin:0 8px}
+.jc-right{width:45%;display:flex;flex-direction:column;gap:5px;align-items:stretch}
 .jc-title{font-weight:700;font-size:13px;line-height:1.3;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .jc-row{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.jc-photos{display:flex;gap:6px;margin-top:3px;flex-wrap:wrap}
-.photo-link{font-size:10px;color:#888;text-decoration:none;font-family:'DM Mono',monospace;border:1px solid #e0e0e0;border-radius:5px;padding:2px 6px;transition:all .12s}
-.photo-link:hover{color:#111;border-color:#999}
-.jc-divider{width:1px;background:var(--border);flex-shrink:0;margin:0 10px;align-self:stretch}
-.jc-right{display:flex;flex-direction:column;gap:5px;align-items:stretch;flex-shrink:0;width:45%}
-
-/* Right-col pills — all same shape */
+.jc-photo-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 12px 10px;border-top:1px solid var(--border)}
 .jc-pill{width:100%;border-radius:8px;border:1px solid #e0e0e0;padding:7px 9px;font-family:'DM Sans',sans-serif;font-size:11px;text-align:left;line-height:1.3;box-sizing:border-box;appearance:none;outline:none;cursor:pointer;background:#f5f5f5;color:#555;transition:border-color .12s;display:block}
 .jc-pill:hover,.jc-pill:focus{border-color:#999}
+.jc-photo-pill{width:100%;border-radius:8px;border:1px solid #e0e0e0;padding:7px 9px;font-family:'DM Sans',sans-serif;font-size:11px;text-align:center;line-height:1.3;cursor:pointer;background:#f5f5f5;color:#555;display:block;outline:none}
+.jc-photo-pill.has-photo{color:var(--blue);border-color:var(--blue-border);background:var(--blue-bg)}
+.jc-photo-pill.can-upload{color:var(--blue);border-color:var(--blue-border);background:#fff}
+.jc-photo-pill.vendor-photo{color:var(--good);border-color:rgba(46,125,50,.3);background:rgba(46,125,50,.05)}
+.jc-photo-pill.no-photo,.jc-photo-pill.no-vendor{color:#bbb;border-color:#eee;cursor:default}
 /* Priority colors */
-.p-need     {background:rgba(160,160,160,.1); border-color:rgba(120,120,120,.3); color:#666}
-.p-low      {background:rgba(180,140,0,.08);  border-color:rgba(160,120,0,.3);   color:#7a5c00}
-.p-medium   {background:rgba(255,180,80,.12); border-color:rgba(230,150,50,.35); color:#c47a00}
-.p-high     {background:rgba(230,100,30,.1);  border-color:rgba(200,80,20,.3);   color:#c45000}
-.p-immediate{background:rgba(198,40,40,.08);  border-color:rgba(180,30,30,.3);   color:#c62828}
-.p-done     {background:rgba(46,125,50,.08);  border-color:rgba(46,125,50,.3);   color:#2e7d32}
-.p-assigned {background:rgba(21,101,192,.05);border-color:rgba(21,101,192,.25);color:#1565c0}
-.p-open     {background:rgba(160,160,160,.1); border-color:rgba(120,120,120,.3); color:#666}
+.p-need{background:rgba(160,160,160,.1);border-color:rgba(120,120,120,.3);color:#666}
+.p-low{background:rgba(180,140,0,.08);border-color:rgba(160,120,0,.3);color:#7a5c00}
+.p-medium{background:rgba(255,180,80,.12);border-color:rgba(230,150,50,.35);color:#c47a00}
+.p-high{background:rgba(230,100,30,.1);border-color:rgba(200,80,20,.3);color:#c45000}
+.p-immediate{background:rgba(198,40,40,.08);border-color:rgba(180,30,30,.3);color:#c62828}
+.p-done{background:rgba(46,125,50,.08);border-color:rgba(46,125,50,.3);color:#2e7d32}
+.p-open{background:rgba(160,160,160,.1);border-color:rgba(120,120,120,.3);color:#666}
+.p-assigned{background:rgba(21,101,192,.05);border-color:rgba(21,101,192,.25);color:#1565c0}
 .assign-select{}
-
-/* ── Empty state ── */
+/* Empty state */
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)}
-.empty-icon{font-size:32px}
-.empty-text{font-size:13px}
-
-/* ── Summary ── */
+/* Summary */
 .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px}
 .stat-num{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:#111;line-height:1}
@@ -116,16 +96,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .sc-stat{text-align:center}
 .sc-num{font-family:'DM Mono',monospace;font-size:17px;color:#111}
 .sc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-
-/* ── Role cards (new user page) ── */
+/* Role cards */
 .role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;display:flex;align-items:center;cursor:pointer;transition:all .15s;flex-shrink:0}
 .role-card:hover{border-color:var(--blue)}
 .role-card.selected{border-color:var(--blue);background:var(--blue-bg);color:var(--blue)}
 .role-name{font-weight:600;font-size:15px}
 .role-desc{font-size:12px;color:var(--muted);margin-top:2px}
 .role-card.selected .role-desc{color:var(--blue);opacity:.7}
-
-/* ── Welcome screen ── */
+/* Welcome */
 .welcome-title{font-size:26px;font-weight:700;color:var(--blue);line-height:1.2;margin-bottom:20px}
 .welcome-btn{width:100%;padding:18px;min-height:68px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;flex-direction:column;gap:3px;justify-content:center}
 .welcome-btn:hover{border-color:#999;background:#fafafa}
@@ -135,8 +113,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .grouped-select:focus{border-color:var(--blue)}
 .grouped-select optgroup{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#aaa;font-style:normal}
 .grouped-select option{font-size:14px;color:#111}
-
-/* ── Photo zone ── */
+/* Photo zone */
 .photo-zone{background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;position:relative;overflow:hidden;flex-shrink:0;height:120px;transition:border-color .2s}
 .photo-zone:hover{border-color:#999}
 .photo-zone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -144,25 +121,20 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .photo-zone p{font-size:13px;color:var(--muted)}
 .cam-icon{width:28px;height:28px;color:var(--muted)}
 input[type=file]{display:none}
-
-/* ── Modal ── */
+/* Modal */
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.25);display:flex;align-items:flex-end;justify-content:center;z-index:350;animation:fadeIn .15s ease}
 .modal-sheet{background:#fff;border-radius:20px 20px 0 0;padding:22px 20px 34px;width:100%;max-width:480px;display:flex;flex-direction:column;gap:11px;box-shadow:0 -4px 24px rgba(0,0,0,.1);animation:slideUp .2s ease}
 @keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
 .modal-title{font-size:16px;font-weight:700;color:var(--blue)}
-.modal-sub{font-size:13px;color:var(--muted);line-height:1.4}
-
-/* ── Two-col row (Get|Address etc) ── */
+/* Twin row */
 .twin-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex-shrink:0}
 .twin-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:#111;cursor:pointer;text-align:left;transition:all .15s;width:100%;outline:none;appearance:none;font-weight:500}
 .twin-btn:hover,.twin-btn:focus{border-color:var(--blue)}
-.twin-btn.selected{border-color:var(--blue);background:var(--blue-bg);color:var(--blue)}
 .twin-input{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:#111;width:100%;outline:none;transition:border-color .15s}
 .twin-input:focus{border-color:var(--blue)}
 .twin-input::placeholder{color:#bbb}
 .twin-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:4px}
-
-/* ── Settings ── */
+/* Settings */
 .info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;flex:1}
 .step-row{display:flex;gap:10px;align-items:flex-start}
 .step-num{font-family:'DM Mono',monospace;font-size:10px;color:#111;background:#ebebeb;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -176,40 +148,19 @@ input[type=file]{display:none}
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0}
 .status-dot.connected{background:var(--good);box-shadow:0 0 6px var(--good)}
 .status-dot.error{background:var(--danger)}
-
-/* ── Loading ── */
+/* Loading */
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;z-index:300}
 .loading-spinner{width:32px;height:32px;border:3px solid #e0e0e0;border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
-
-/* ── Vendor proficiency form ── */
-.prof-grid{display:flex;flex-direction:column;gap:6px;overflow-y:auto;flex:1}
-.prof-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;flex-shrink:0}
-.prof-header{display:flex;align-items:center;gap:10px;padding:10px 13px;cursor:pointer;background:#fff;transition:background .12s}
-.prof-header:hover{background:var(--surface)}
-.prof-header.selected{background:var(--blue-bg)}
-.prof-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center}
-.prof-header.selected .prof-check{background:var(--blue);border-color:var(--blue)}
-.prof-name{flex:1;font-size:14px;font-weight:500}
-.prof-primary-btn{font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:'DM Mono',monospace;color:var(--muted);transition:all .15s;white-space:nowrap}
-.prof-primary-btn.is-primary{background:var(--blue);border-color:var(--blue);color:#fff}
-.prof-detail{display:none;padding:10px 13px;border-top:1px solid var(--border);background:var(--surface);gap:8px;flex-direction:column}
-.prof-detail.open{display:flex}
-.prof-detail-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.grade-helper{font-size:10px;color:var(--muted);line-height:1.4;padding:6px 8px;background:#fff;border:1px solid var(--border);border-radius:8px}
-
-/* ── Job Detail Sheet ── */
-.detail-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:250;animation:fadeIn .15s ease;padding:20px}
-.detail-sheet{background:#fff;border-radius:16px;width:100%;max-width:440px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.2);animation:scaleIn .18s ease;overflow:hidden}
-@keyframes scaleIn{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
-/* Mirrors .job-card header row */
-.detail-header{padding:13px 14px 11px;flex-shrink:0;display:flex;flex-direction:row;align-items:stretch;gap:0}
+/* Detail card */
+.detail-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:250;padding:20px}
+.detail-sheet{background:#fff;border-radius:16px;width:100%;max-width:440px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.2);overflow:hidden;animation:fadeIn .18s ease}
+.detail-header{padding:13px 14px 11px;flex-shrink:0;display:flex;flex-direction:row;align-items:stretch}
 .detail-header-left{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;padding-right:10px}
-.detail-title{font-weight:700;font-size:14px;line-height:1.3;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.detail-location{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.detail-title{font-weight:700;font-size:14px;line-height:1.3;color:#111}
+.detail-location{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
 .detail-row{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .detail-header-divider{width:1px;background:var(--border);flex-shrink:0;margin:0 10px}
-.detail-header-right{display:flex;flex-direction:column;gap:5px;align-items:stretch;flex-shrink:0;width:50%}
-/* Body — extra detail below */
+.detail-header-right{display:flex;flex-direction:column;gap:5px;align-items:stretch;width:45%;flex-shrink:0}
 .detail-body{flex:1;overflow-y:auto;border-top:1px solid var(--border);padding:14px;display:flex;flex-direction:column;gap:12px}
 .detail-body::-webkit-scrollbar{width:3px}
 .detail-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
@@ -221,41 +172,41 @@ input[type=file]{display:none}
 .detail-pimg{width:100%;max-height:200px;object-fit:cover;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:opacity .15s}
 .detail-pimg:hover{opacity:.88}
 .detail-pnone{width:100%;height:60px;background:var(--surface);border:1px dashed var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#bbb}
-
-/* ── Card photo row ── */
-.jc-photo-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;flex-shrink:0}
-.jc-photo-pill{width:100%;border-radius:8px;border:1px solid #e0e0e0;padding:7px 9px;font-family:'DM Sans',sans-serif;font-size:11px;text-align:center;line-height:1.3;box-sizing:border-box;cursor:pointer;background:#f5f5f5;color:#555;transition:all .12s;display:block;outline:none}
-.jc-photo-pill:hover{border-color:#999}
-.jc-photo-pill.has-photo{color:var(--blue);border-color:var(--blue-border);background:var(--blue-bg)}
-.jc-photo-pill.no-photo{color:#bbb;border-color:#eee}
-.jc-photo-pill.can-upload{color:var(--blue);border-color:var(--blue-border);background:#fff}
-.jc-photo-pill.vendor-photo{color:var(--good);border-color:rgba(46,125,50,.3);background:rgba(46,125,50,.05)}
-.jc-photo-pill.no-vendor{color:#bbb;border-color:#eee}
-
-/* ── Fullscreen photo overlay ── */
-.fs-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fadeIn .15s ease;cursor:pointer}
+/* Fullscreen */
+.fs-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:400;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .fs-img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:8px}
-.fs-close{position:absolute;top:20px;right:20px;color:#fff;font-size:28px;line-height:1;opacity:.7}
+/* Vendor prof */
+.prof-grid{display:flex;flex-direction:column;gap:6px;overflow-y:auto;flex:1}
+.prof-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;flex-shrink:0}
+.prof-header{display:flex;align-items:center;gap:10px;padding:10px 13px;cursor:pointer;background:#fff;transition:background .12s}
+.prof-header:hover{background:var(--surface)}
+.prof-header.selected{background:var(--blue-bg)}
+.prof-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.prof-header.selected .prof-check{background:var(--blue);border-color:var(--blue)}
+.prof-name{flex:1;font-size:14px;font-weight:500}
+.prof-primary-btn{font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:'DM Mono',monospace;color:var(--muted);white-space:nowrap}
+.prof-primary-btn.is-primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.prof-detail{display:none;padding:10px 13px;border-top:1px solid var(--border);background:var(--surface);gap:8px;flex-direction:column}
+.prof-detail.open{display:flex}
+.prof-detail-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grade-helper{font-size:10px;color:var(--muted);line-height:1.4;padding:6px 8px;background:#fff;border:1px solid var(--border);border-radius:8px}
 </style>
 </head>
 <body>
 <div id="app">
-
 <div class="header">
   <button class="logo" onclick="showScreen('screen-welcome')">WorkOrder</button>
-  <div class="header-right" id="headerRight">
-    <button class="icon-btn" onclick="showScreen('screen-settings')">⚙</button>
-  </div>
+  <div id="headerRight"><button class="icon-btn" onclick="showScreen('screen-settings')">&#9881;</button></div>
 </div>
 
-<!-- ══ WELCOME ══ -->
+<!-- WELCOME -->
 <div class="screen active" id="screen-welcome">
   <div class="welcome-title">Sign In</div>
-  <div class="sw">
+  <div style="position:relative">
     <select class="grouped-select" id="welcomeUserSelect" onchange="onWelcomeSelect(this)">
-      <option value="">— Select your name —</option>
+      <option value="">&#8212; Select your name &#8212;</option>
     </select>
-    <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:12px">▾</span>
+    <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:12px">&#9662;</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;margin:14px 0">
     <div style="flex:1;height:1px;background:var(--border)"></div>
@@ -268,15 +219,15 @@ input[type=file]{display:none}
   </button>
 </div>
 
-<!-- ══ NEW USER ══ -->
+<!-- NEW USER -->
 <div class="screen" id="screen-newuser">
   <div class="screen-title">New User</div>
-  <div class="field-group">
+  <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">
     <label class="field-label">Your Name</label>
     <input class="fi" id="nuName" type="text" placeholder="First Last" maxlength="50">
   </div>
   <div class="gap" style="height:10px"></div>
-  <div class="field-group">
+  <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">
     <label class="field-label">Email</label>
     <input class="fi" id="nuEmail" type="email" placeholder="you@email.com">
   </div>
@@ -284,143 +235,112 @@ input[type=file]{display:none}
   <label class="field-label">Select your role to see your view</label>
   <div class="gap" style="height:6px"></div>
   <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
-    <div class="role-card" id="role-user" onclick="selectRole('user')">
-      <div><div class="role-name">User</div><div class="role-desc">Submit work orders</div></div>
-    </div>
-    <div class="role-card" id="role-vendor" onclick="selectRole('vendor')">
-      <div><div class="role-name">Vendor</div><div class="role-desc">Complete work</div></div>
-    </div>
-    <div class="role-card" id="role-admin" onclick="selectRole('admin')">
-      <div><div class="role-name">Admin</div><div class="role-desc">Assign work</div></div>
-    </div>
+    <div class="role-card" id="role-user" onclick="selectRole('user')"><div><div class="role-name">User</div><div class="role-desc">Submit work orders</div></div></div>
+    <div class="role-card" id="role-vendor" onclick="selectRole('vendor')"><div><div class="role-name">Vendor</div><div class="role-desc">Complete work</div></div></div>
+    <div class="role-card" id="role-admin" onclick="selectRole('admin')"><div><div class="role-name">Admin</div><div class="role-desc">Assign work</div></div></div>
   </div>
   <div style="flex:1"></div>
-  <button class="btn btn-primary" onclick="submitNewUser()">Get Started →</button>
+  <button class="btn btn-primary" onclick="submitNewUser()">Get Started &#8594;</button>
 </div>
 
-<!-- ══ VENDOR PROFICIENCY ══ -->
+<!-- VENDOR PROF -->
 <div class="screen" id="screen-vendor-prof">
   <div class="screen-title">Your Skills</div>
   <div style="font-size:12px;color:var(--muted);margin-bottom:12px;flex-shrink:0">Select each skill, set your grade and rate, then mark one as your primary role.</div>
   <div class="prof-grid" id="profGrid"></div>
   <div class="gap" style="height:10px"></div>
-  <button class="btn btn-primary" onclick="goToVendorReview()">Review →</button>
+  <button class="btn btn-primary" onclick="goToVendorReview()">Review &#8594;</button>
 </div>
 
-<!-- ══ VENDOR REVIEW ══ -->
+<!-- VENDOR REVIEW -->
 <div class="screen" id="screen-vendor-review">
   <div class="screen-title">Review</div>
   <div style="flex:1;overflow-y:auto" id="vendorReviewContent"></div>
   <div class="gap" style="height:10px"></div>
-  <div class="btn-row">
-    <button class="btn btn-secondary" onclick="showScreen('screen-vendor-prof')">← Edit</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0">
+    <button class="btn btn-secondary" onclick="showScreen('screen-vendor-prof')">&#8592; Edit</button>
     <button class="btn btn-primary" onclick="submitVendorProf()">Submit</button>
   </div>
 </div>
 
-<!-- ══ CONFIRMATION ══ -->
+<!-- CONFIRM -->
 <div class="screen" id="screen-confirm">
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px">
-    <div style="font-size:40px">✓</div>
+    <div style="font-size:40px">&#10003;</div>
     <div style="font-size:20px;font-weight:700;color:var(--blue)">Submitted</div>
     <div style="font-size:14px;color:var(--muted);max-width:280px;line-height:1.6" id="confirmMsg"></div>
   </div>
-  <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">← Back to Sign In</button>
+  <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">&#8592; Back to Sign In</button>
 </div>
 
-<!-- ══ DISPATCHER ══ -->
+<!-- DISPATCHER -->
 <div class="screen" id="screen-dispatcher" style="padding:0">
-  <!-- New Work Order button -->
-  <div style="padding:12px 20px 0;flex-shrink:0"><button class="btn btn-primary" onclick="showScreen('screen-newjob')" style="border-radius:50px;font-size:14px;padding:11px 20px">+ New Work Order</button></div>
-  <!-- Filters -->
+  <div style="padding:12px 20px 0;flex-shrink:0">
+    <button class="btn btn-primary" onclick="showScreen('screen-newjob')" style="border-radius:50px;font-size:14px;padding:11px 20px">+ New Work Order</button>
+  </div>
   <div style="display:flex;gap:6px;flex-shrink:0;padding:10px 20px 6px;overflow-x:auto">
-    <div class="sw" style="flex:1;min-width:90px">
-      <select class="fi" id="fProperty" onchange="renderAllJobs()" style="padding:8px 28px 8px 10px;font-size:12px">
+    <div class="sw" style="flex:1;min-width:80px">
+      <select class="fi" id="fProperty" onchange="renderAllJobs()" style="padding:8px 24px 8px 10px;font-size:12px">
         <option value="">All Properties</option>
       </select>
     </div>
-    <div class="sw" style="flex:1;min-width:90px">
-      <select class="fi" id="fStatus" onchange="renderAllJobs()" style="padding:8px 28px 8px 10px;font-size:12px">
+    <div class="sw" style="flex:1;min-width:80px">
+      <select class="fi" id="fStatus" onchange="renderAllJobs()" style="padding:8px 24px 8px 10px;font-size:12px">
         <option value="">All Priority/Status</option>
-        <option>Need</option><option>Low</option>
-        <option>Medium</option><option>High</option><option>Immediate</option><option>Done</option>
+        <option>Need</option><option>Low</option><option>Medium</option><option>High</option><option>Immediate</option><option>Done</option>
       </select>
     </div>
-    <div class="sw" style="flex:1;min-width:90px">
-      <select class="fi" id="fVendor" onchange="renderAllJobs()" style="padding:8px 28px 8px 10px;font-size:12px">
+    <div class="sw" style="flex:1;min-width:80px">
+      <select class="fi" id="fVendor" onchange="renderAllJobs()" style="padding:8px 24px 8px 10px;font-size:12px">
         <option value="">All Vendors</option>
       </select>
     </div>
   </div>
-  <!-- Job list -->
   <div class="list-area" id="allJobsList" style="padding:0 20px 20px"></div>
-</div><!-- /dispatcher -->
+</div>
 
-<!-- ══ NEW JOB SCREEN ══ -->
+<!-- NEW JOB -->
 <div class="screen" id="screen-newjob">
   <div class="screen-title">New Work Order</div>
   <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0;padding-bottom:8px">
-
     <label class="photo-zone" id="photoZoneD" for="photoFileD" style="cursor:pointer">
       <svg class="cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
       <p>Tap to attach photo</p>
     </label>
     <input type="file" id="photoFileD" accept="image/*" onchange="handlePhotoD(this)">
-
     <div class="gap" style="height:10px"></div>
     <div class="twin-label">Property Name</div>
-    <div class="sw">
-      <select class="fi" id="dProperty" style="padding:11px 28px 11px 13px">
-        <option value="">— Select property —</option>
-      </select>
-    </div>
-
+    <div class="sw"><select class="fi" id="dProperty" style="padding:11px 28px 11px 13px"><option value="">&#8212; Select property &#8212;</option></select></div>
     <div class="gap" style="height:10px"></div>
     <div class="twin-label">Location</div>
     <div class="twin-row">
-      <button class="twin-btn" id="locGetBtn" onclick="triggerLocationFlow()">📍 Get</button>
+      <button type="button" class="twin-btn" onclick="triggerLocationFlow()">&#128205; Get</button>
       <input class="twin-input" id="dLocation" placeholder="Address" onclick="triggerAddressClick()">
     </div>
-
     <div class="gap" style="height:10px"></div>
     <div class="twin-label">Priority &amp; Due Date</div>
     <div class="twin-row">
-      <div class="sw" style="position:relative">
+      <div class="sw">
         <select class="fi twin-btn" id="dPriority" onchange="onPriorityChange()" style="padding:11px 28px 11px 12px;font-size:13px;font-weight:500">
           <option value="">Priority</option>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-          <option value="Immediate">Immediate</option>
+          <option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Immediate">Immediate</option>
         </select>
       </div>
-      <input class="twin-input" id="dDue" type="date" onchange="onDueDateChange()" placeholder="Hard Due Date" style="text-align:left">
+      <input class="twin-input" id="dDue" type="date" onchange="onDueDateChange()" style="text-align:left">
     </div>
-
     <div class="gap" style="height:10px"></div>
     <div class="twin-label">Job Description</div>
     <div class="twin-row">
-      <div class="sw" style="position:relative">
-        <select class="twin-input fi" id="dCategory" style="padding:11px 28px 11px 12px;font-size:13px">
-          <option value="">Job Type</option>
-        </select>
-      </div>
+      <div class="sw"><select class="fi twin-btn" id="dCategory" style="padding:11px 28px 11px 12px;font-size:13px"><option value="">Job Type</option></select></div>
       <input class="twin-input" id="dNote" placeholder="Notes">
     </div>
-
     <div class="gap" style="height:10px"></div>
     <div class="twin-label">Assign To</div>
-    <div class="sw">
-      <select class="fi" id="dAssign" style="padding:11px 28px 11px 13px">
-        <option value="">— Unassigned —</option>
-      </select>
-    </div>
-
+    <div class="sw"><select class="fi" id="dAssign" style="padding:11px 28px 11px 13px"><option value="">&#8212; Unassigned &#8212;</option></select></div>
     <div class="gap" style="height:10px"></div>
     <div class="twin-label">Estimated Hours</div>
-    <button type="button" class="fi" id="dEstHoursBtn" onclick="openEstHoursForm()" style="text-align:left;cursor:pointer;color:#bbb;background:var(--surface)">— Select —</button>
+    <button type="button" class="fi" id="dEstHoursBtn" onclick="openEstHoursForm()" style="text-align:left;cursor:pointer;color:#bbb;background:var(--surface)">&#8212; Select &#8212;</button>
     <input type="hidden" id="dEstHours">
-
     <div class="gap" style="height:12px"></div>
     <div id="submitToast"></div>
     <div id="submitToastSpacer" style="height:0"></div>
@@ -430,31 +350,29 @@ input[type=file]{display:none}
   </div>
 </div>
 
-<!-- ══ VENDOR VIEW ══ -->
+<!-- VENDOR VIEW -->
 <div class="screen" id="screen-vendor">
   <div class="tab-bar" id="vendTabBar">
     <button class="tab-btn active" onclick="switchVendTab(0)">My Jobs</button>
     <button class="tab-btn" onclick="switchVendTab(1)">Completed</button>
   </div>
-  <div class="tab-panels" id="vendPanels">
+  <div class="tab-panels">
     <div class="tab-panel active" id="vp-0"><div class="list-area" id="vendActiveList"></div></div>
     <div class="tab-panel" id="vp-1"><div class="list-area" id="vendDoneList"></div></div>
   </div>
 </div>
 
-<!-- ══ SETTINGS ══ -->
+<!-- SETTINGS -->
 <div class="screen" id="screen-settings">
   <div class="screen-title">Settings</div>
   <div class="info-box">
-    <div class="step-row"><div class="step-num">1</div><div class="step-text">Open Google Sheet → <strong>Extensions → Apps Script</strong></div></div>
-    <div class="step-row"><div class="step-num">2</div><div class="step-text">Paste <strong>workorder-script.js</strong> and save.</div></div>
-    <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Deploy → New deployment</strong> · Type: <span class="code-i">Web app</span> · Access: <span class="code-i">Anyone</span></div></div>
-    <div class="step-row"><div class="step-num">4</div><div class="step-text">Copy the Web App URL and paste below.</div></div>
-    <div class="step-row"><div class="step-num">5</div><div class="step-text">Sheet tabs auto-created: <span class="code-i">WorkOrders</span> · <span class="code-i">People</span> · <span class="code-i">Properties</span>. Set admin email in the <span class="code-i">Settings</span> tab.</div></div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text">Google Sheet &#8594; <strong>Extensions &#8594; Apps Script</strong></div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text">Paste <strong>workorder-script.js</strong>, save, deploy as <span class="code-i">Web app</span>, access: <span class="code-i">Anyone</span></div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text">Paste Web App URL below. Tabs auto-created: <span class="code-i">WorkOrders</span> <span class="code-i">People</span> <span class="code-i">Properties</span> <span class="code-i">JobTypes</span></div></div>
   </div>
   <div class="gap" style="height:10px"></div>
   <label class="field-label">Web App URL</label>
-  <input class="url-input" id="sheetsUrlInput" type="url" placeholder="https://script.google.com/macros/s/…">
+  <input class="url-input" id="sheetsUrlInput" type="url" placeholder="https://script.google.com/macros/s/&#8230;">
   <div class="gap" style="height:8px"></div>
   <div class="status-row"><span class="status-dot" id="statusDot"></span><span id="statusText">No URL saved</span></div>
   <div class="gap" style="height:8px"></div>
@@ -462,58 +380,31 @@ input[type=file]{display:none}
   <div class="gap" style="height:8px"></div>
   <button class="btn btn-secondary" onclick="testConnection()">Test Connection</button>
   <div class="gap" style="height:8px"></div>
-  <button class="btn btn-secondary" onclick="goBackFromSettings()">← Back</button>
+  <button class="btn btn-secondary" onclick="goBackFromSettings()">&#8592; Back</button>
 </div>
 
-<!-- ══ LOCATION MODAL ══ -->
+<!-- MODALS -->
 <div id="locationModal" style="display:none" class="modal-backdrop" onclick="closeModal('locationModal',event)">
   <div class="modal-sheet">
     <div class="modal-title">Set Location</div>
-    <div class="modal-sub">Use GPS or mark as remote.</div>
-    <button class="btn btn-primary" onclick="useGpsLocation()">📍 Use My Current Location</button>
-    <button class="btn btn-secondary" onclick="useRemoteLocation()">💻 Not Onsite — Remote Work Order</button>
+    <button class="btn btn-primary" onclick="useGpsLocation()">&#128205; Use My Current Location</button>
+    <button class="btn btn-secondary" onclick="useRemoteLocation()">&#128187; Not Onsite &#8212; Enter Address Manually</button>
   </div>
 </div>
-
-<!-- ══ ADD PROPERTY MODAL ══ -->
 <div id="addPropModal" style="display:none" class="modal-backdrop" onclick="closeModal('addPropModal',event)">
   <div class="modal-sheet">
     <div class="modal-title">Add New Property</div>
-    <input class="fi" id="newPropInput" placeholder="e.g. 123 Maple St, Unit 4" style="margin-top:4px">
+    <input class="fi" id="newPropInput" placeholder="e.g. 123 Maple St">
     <button class="btn btn-primary" onclick="confirmAddProperty()">Add Property</button>
     <button class="btn btn-secondary" onclick="closeModal('addPropModal')">Cancel</button>
   </div>
 </div>
-
-<!-- ══ PRIORITY STATUS MODAL (card) ══ -->
 <div id="priorityModal" style="display:none" class="modal-backdrop" onclick="closeModal('priorityModal',event)">
   <div class="modal-sheet">
     <div class="modal-title">Priority / Status</div>
     <div id="priorityModalBtns" style="display:flex;flex-direction:column;gap:8px"></div>
   </div>
 </div>
-
-
-<!-- ══ PHOTO MODAL ══ -->
-<div id="photoModal" style="display:none" class="modal-backdrop" onclick="closeModal('photoModal',event)">
-  <div class="modal-sheet" style="align-items:center">
-    <div class="modal-title" id="photoModalTitle">Photo</div>
-    <img id="photoModalImg" src="" style="width:100%;max-height:60vh;object-fit:contain;border-radius:10px;margin-top:4px" alt="Work order photo">
-    <button class="btn btn-secondary" onclick="closeModal('photoModal')" style="margin-top:4px">Close</button>
-  </div>
-</div>
-
-
-<!-- JOB DETAIL SHEET -->
-<div id="jobDetailBackdrop" style="display:none" class="detail-backdrop" onclick="closeJobDetail(event)">
-  <div class="detail-sheet" onclick="event.stopPropagation()">
-    <div class="detail-header" id="ddHeader"></div>
-    <div class="detail-body" id="ddBody"></div>
-  </div>
-</div>
-
-
-<!-- EST HOURS MODAL -->
 <div id="estHoursModal" style="display:none" class="modal-backdrop" onclick="closeModal('estHoursModal',event)">
   <div class="modal-sheet">
     <div class="modal-title">Estimated Hours</div>
@@ -521,962 +412,805 @@ input[type=file]{display:none}
   </div>
 </div>
 
-
-
+<!-- JOB DETAIL -->
+<div id="jobDetailBackdrop" style="display:none" class="detail-backdrop" onclick="closeJobDetail(event)">
+  <div class="detail-sheet" onclick="event.stopPropagation()">
+    <div class="detail-header" id="ddHeader"></div>
+    <div class="detail-body" id="ddBody"></div>
+  </div>
+</div>
 
 </div><!-- /app -->
-
+<input type="file" id="userPhotoUpload" accept="image/*" onchange="handleUserPhotoUpload(this)" style="position:fixed;top:-100px;left:-100px;opacity:0;width:1px;height:1px">
+<input type="file" id="vendorPhotoUpload" accept="image/*" onchange="handleVendorPhotoUpload(this)" style="position:fixed;top:-100px;left:-100px;opacity:0;width:1px;height:1px">
 <script>
-// ════════════════════════════════════════════════════════
 // STATE
-// ════════════════════════════════════════════════════════
-const S = {
-  role: null, userName: '', vendorName: '',
-  vendors: [], jobs: [], properties: [], people: [], jobTypes: [],
-  photoFileD: null, prevScreen: 'screen-welcome',
-  newUser: { name:'', email:'', role:'' },
-  proficiencies: {}, // { 'Electrician': { grade:'B', rate:'90', primary:false } }
-  pendingPriorityJobId: null,
+var S = {
+  role:null, userName:'', vendorName:'',
+  vendors:[], jobs:[], properties:[], people:[], jobTypes:[],
+  photoFileD:null, prevScreen:'screen-welcome',
+  newUser:{name:'',email:'',role:''},
+  proficiencies:{},
+  pendingPriorityJobId:null, pendingEstJobId:null, pendingPhotoJobId:null,
 };
+var PRIORITY_DAYS = {Low:30,Medium:7,High:2,Immediate:0};
+var EST_HOURS_LEFT  = ['1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+var EST_HOURS_RIGHT = ['1 day','2 days','3 days','4 days','5 days','6 days','7 days','8+ days'];
+var EST_HOURS_ALL   = EST_HOURS_LEFT.concat(EST_HOURS_RIGHT);
+var PROFICIENCY_LIST = ['Boilers','Cleaning','Electrician','Flooring','Framing','Kitchen Install','Landscaping','Lawn Mowing','Leasing','Maintenance/Handyman/Turns','Paint','Plumber','Roofs','Sheetrock/Mud/Tape','Tile'];
+var PROF_UNITS = {'Leasing':'per lease','Kitchen Install':'per box','Flooring':'per SF'};
+var P_COLOR = {Need:'#666',Low:'#7a5c00',Medium:'#c47a00',High:'#c45000',Immediate:'#c62828',Done:'#2e7d32',Open:'#666'};
+var P_BG    = {Need:'rgba(160,160,160,.1)',Low:'rgba(180,140,0,.08)',Medium:'rgba(255,180,80,.12)',High:'rgba(230,100,30,.1)',Immediate:'rgba(198,40,40,.08)',Done:'rgba(46,125,50,.08)',Open:'rgba(160,160,160,.1)'};
 
-const PRIORITY_DAYS = { Low:30, Medium:7, High:2, Immediate:0 };
-const PROFICIENCY_LIST = [
-  'Boilers','Cleaning','Electrician','Flooring','Framing',
-  'Kitchen Install','Landscaping','Lawn Mowing','Leasing',
-  'Maintenance/Handyman/Turns','Paint','Plumber','Roofs',
-  'Sheetrock/Mud/Tape','Tile'
-];
-const PROF_UNITS = { Leasing:'per lease', 'Kitchen Install':'per box', Flooring:'per SF' };
-
-// ════════════════════════════════════════════════════════
 // URL / API
-// ════════════════════════════════════════════════════════
-const getUrl = () => { try { return localStorage.getItem('woUrl')||''; } catch(e){ return ''; } };
-const setUrl = u => { try { localStorage.setItem('woUrl',u); } catch(e){} };
-async function apiCall(payload) {
-  const u = getUrl(); if (!u) throw new Error('No URL');
-  const r = await fetch(u, { method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(payload) });
-  return r.json();
+function getUrl(){ try{ return localStorage.getItem('woUrl')||''; }catch(e){ return ''; } }
+function setUrl(u){ try{ localStorage.setItem('woUrl',u); }catch(e){} }
+function apiCall(payload){
+  var u = getUrl(); if(!u) return Promise.reject(new Error('No URL'));
+  return fetch(u,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)}).then(function(r){ return r.json(); });
 }
 
-// ════════════════════════════════════════════════════════
 // SCREEN NAV
-// ════════════════════════════════════════════════════════
-function showScreen(id) {
-  if (id === 'screen-settings') {
-    S.prevScreen = document.querySelector('.screen.active')?.id || 'screen-welcome';
-    updateStatus(getUrl());
-  }
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+function showScreen(id){
+  if(id==='screen-settings'){ S.prevScreen=document.querySelector('.screen.active').id||'screen-welcome'; updateStatus(getUrl()); }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
   updateHeader(id);
 }
-function goBackFromSettings() { showScreen(S.prevScreen); }
-function updateHeader(id) {
-  const hr = document.getElementById('headerRight');
-  const noLogout = ['screen-welcome','screen-newuser','screen-newjob','screen-settings','screen-vendor-prof','screen-vendor-review','screen-confirm'].includes(id);
-  if (id === 'screen-newjob') {
-    hr.innerHTML = `<button class="icon-btn" onclick="showScreen('screen-dispatcher')">← Back</button>`;
+function goBackFromSettings(){ showScreen(S.prevScreen); }
+function updateHeader(id){
+  var hr = document.getElementById('headerRight');
+  if(id==='screen-newjob'){
+    hr.innerHTML = '<button class="icon-btn" onclick="showScreen(\'screen-dispatcher\')">&#8592; Back</button>';
     return;
   }
-  if (noLogout) {
-    hr.innerHTML = `<button class="icon-btn" onclick="showScreen('screen-settings')">⚙</button>`;
+  var noLogout = ['screen-welcome','screen-newuser','screen-settings','screen-vendor-prof','screen-vendor-review','screen-confirm'].indexOf(id) >= 0;
+  if(noLogout){
+    hr.innerHTML = '<button class="icon-btn" onclick="showScreen(\'screen-settings\')">&#9881;</button>';
   } else {
-    hr.innerHTML = `<div class="session-info">${esc(S.userName)}<br><span style="color:var(--blue)">${S.role||''}</span></div>`;
+    hr.innerHTML = '<div class="session-info">'+esc(S.userName)+'<br><span style="color:var(--blue)">'+esc(S.role||'')+'</span></div>';
   }
 }
 
-// ════════════════════════════════════════════════════════
-// SWIPE
-// ════════════════════════════════════════════════════════
-function switchVendTab(i) {
-  document.querySelectorAll('#vendTabBar .tab-btn').forEach((b,j) => b.classList.toggle('active', i===j));
-  const panels = document.getElementById('vendPanels');
-  if (panels) panels.querySelectorAll('.tab-panel').forEach((p,j) => p.classList.toggle('active', i===j));
+// VENDOR TABS
+function switchVendTab(i){
+  document.querySelectorAll('#vendTabBar .tab-btn').forEach(function(b,j){ b.classList.toggle('active',i===j); });
+  document.querySelectorAll('#screen-vendor .tab-panel').forEach(function(p,j){ p.classList.toggle('active',i===j); });
   renderVendorJobs(i===1);
 }
 
-// ════════════════════════════════════════════════════════
-// WELCOME / LOGIN
-// ════════════════════════════════════════════════════════
-function populateWelcomeDropdown() {
-  const sel = document.getElementById('welcomeUserSelect');
-  sel.innerHTML = '<option value="">— Select your name —</option>';
-  const groups = { Users: S.people.filter(p=>p.role==='user'), Vendors: S.people.filter(p=>p.role==='vendor'), Admins: S.people.filter(p=>p.role==='admin') };
-  Object.entries(groups).forEach(([label, people]) => {
-    if (!people.length) return;
-    const grp = document.createElement('optgroup');
+// WELCOME
+function populateWelcomeDropdown(){
+  var sel = document.getElementById('welcomeUserSelect');
+  sel.innerHTML = '<option value="">&#8212; Select your name &#8212;</option>';
+  var groups = {Users:S.people.filter(function(p){ return p.role==='user'; }), Vendors:S.people.filter(function(p){ return p.role==='vendor'; }), Admins:S.people.filter(function(p){ return p.role==='admin'; })};
+  Object.keys(groups).forEach(function(label){
+    var people = groups[label];
+    if(!people.length) return;
+    var grp = document.createElement('optgroup');
     grp.label = label;
-    people.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = JSON.stringify({ name:p.name, role:p.role });
-      opt.textContent = '\u00a0\u00a0\u00a0\u00a0' + p.name;
+    people.slice().sort(function(a,b){ return a.name.localeCompare(b.name); }).forEach(function(p){
+      var opt = document.createElement('option');
+      opt.value = JSON.stringify({name:p.name,role:p.role});
+      opt.textContent = '    ' + p.name;
       grp.appendChild(opt);
     });
     sel.appendChild(grp);
   });
 }
-function onWelcomeSelect(sel) {
-  if (!sel.value) return;
-  const { name, role } = JSON.parse(sel.value);
-  S.userName = name; S.role = role;
-  if (role === 'vendor') {
-    const v = S.vendors.find(x => x.name === name);
-    S.vendorName = v ? v.name : name;
+function onWelcomeSelect(sel){
+  if(!sel.value) return;
+  var parsed = JSON.parse(sel.value);
+  S.userName = parsed.name; S.role = parsed.role;
+  if(parsed.role==='vendor'){
+    var v = S.vendors.find(function(x){ return x.name===parsed.name; });
+    S.vendorName = v ? v.name : parsed.name;
   }
   enterApp();
 }
-async function enterApp() {
+function enterApp(){
   showLoading();
-  await loadData();
-  hideLoading();
-  populateVendorDropdowns();
-  populatePropertyDropdown();
-  populateJobTypes();
-  if (S.role === 'vendor') { showScreen('screen-vendor'); renderVendorJobs(false); }
-  else { showScreen('screen-dispatcher'); renderAllJobs(); }
+  loadData().then(function(){
+    hideLoading();
+    populateVendorDropdowns();
+    populatePropertyDropdown();
+    populateJobTypes();
+    if(S.role==='vendor'){ showScreen('screen-vendor'); renderVendorJobs(false); }
+    else{ showScreen('screen-dispatcher'); renderAllJobs(); }
+  });
 }
 
-// ════════════════════════════════════════════════════════
-// NEW USER FLOW
-// ════════════════════════════════════════════════════════
-function selectRole(role) {
+// NEW USER
+function selectRole(role){
   S.newUser.role = role;
-  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.role-card').forEach(function(c){ c.classList.remove('selected'); });
   document.getElementById('role-'+role).classList.add('selected');
 }
-async function submitNewUser() {
-  const name = document.getElementById('nuName').value.trim();
-  const email = document.getElementById('nuEmail').value.trim();
-  if (!name) return alert('Please enter your name.');
-  if (!S.newUser.role) return alert('Please select a role.');
+function submitNewUser(){
+  var name = document.getElementById('nuName').value.trim();
+  var email = document.getElementById('nuEmail').value.trim();
+  if(!name) return alert('Please enter your name.');
+  if(!S.newUser.role) return alert('Please select a role.');
   S.newUser.name = name; S.newUser.email = email;
   S.userName = name; S.role = S.newUser.role;
-  if (S.newUser.role === 'vendor') {
-    buildProficiencyForm();
-    showScreen('screen-vendor-prof');
-  } else {
-    await finalizeNewUser();
-  }
+  if(S.newUser.role==='vendor'){ buildProficiencyForm(); showScreen('screen-vendor-prof'); }
+  else finalizeNewUser();
 }
-async function finalizeNewUser() {
-  try {
-    await apiCall({ action:'addPerson', person:{ name:S.newUser.name, email:S.newUser.email, role:S.newUser.role, proficiencies:'', primaryProf:'', status:'pending' }});
-  } catch(e) {}
-  document.getElementById('confirmMsg').textContent = 'Submitted. You\'ll get an email once your account is approved.';
+function finalizeNewUser(){
+  apiCall({action:'addPerson',person:{name:S.newUser.name,email:S.newUser.email,role:S.newUser.role,proficiencies:'',primaryProf:'',createdAt:new Date().toISOString()}}).catch(function(){});
+  document.getElementById('confirmMsg').textContent = "Submitted. You'll get an email once your account is approved.";
   showScreen('screen-confirm');
 }
 
-// ════════════════════════════════════════════════════════
-// VENDOR PROFICIENCY FORM
-// ════════════════════════════════════════════════════════
-function buildProficiencyForm() {
-  const grid = document.getElementById('profGrid');
+// VENDOR PROF FORM
+function buildProficiencyForm(){
+  var grid = document.getElementById('profGrid');
   grid.innerHTML = '';
-  PROFICIENCY_LIST.forEach(prof => {
-    const unit = PROF_UNITS[prof] || 'per hr';
-    const isLeasing = prof === 'Leasing';
-    const el = document.createElement('div');
-    el.className = 'prof-item';
-    el.id = 'pi-'+prof.replace(/\//g,'-');
-    el.innerHTML = `
-      <div class="prof-header" onclick="toggleProf('${esc(prof)}')" id="ph-${esc(prof.replace(/\//g,'-'))}">
-        <div class="prof-check" id="pc-${esc(prof.replace(/\//g,'-'))}"></div>
-        <div class="prof-name">${esc(prof)}</div>
-        <button class="prof-primary-btn" id="pp-${esc(prof.replace(/\//g,'-'))}" onclick="event.stopPropagation();setPrimary('${esc(prof)}')">★ Primary</button>
-      </div>
-      <div class="prof-detail" id="pd-${esc(prof.replace(/\//g,'-'))}">
-        <div class="prof-detail-row">
-          <div>
-            <div style="font-size:11px;color:var(--blue);margin-bottom:4px">Grade</div>
-            <select class="fi" id="pg-${esc(prof.replace(/\//g,'-'))}" style="padding:8px 10px;font-size:13px">
-              <option value="">Select</option>
-              <option value="B">B — Refs/experience</option>
-              <option value="C">C — Some experience</option>
-              <option value="D">D — Learning (auto-approved)</option>
-            </select>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--blue);margin-bottom:4px">Rate (${unit})</div>
-            ${isLeasing
-              ? `<input class="fi" id="pr-${esc(prof.replace(/\//g,'-'))}" placeholder="$/new" style="padding:8px 10px;font-size:13px;margin-bottom:4px"><input class="fi" id="pr2-${esc(prof.replace(/\//g,'-'))}" placeholder="$/renewal" style="padding:8px 10px;font-size:13px">`
-              : `<input class="fi" id="pr-${esc(prof.replace(/\//g,'-'))}" type="number" placeholder="0" style="padding:8px 10px;font-size:13px">`
-            }
-          </div>
-        </div>
-        <div class="grade-helper">
-          <strong>A</strong> — Admin upgrade only &nbsp;·&nbsp;
-          <strong>B</strong> — Refs + approved &nbsp;·&nbsp;
-          <strong>C</strong> — Exp + approved &nbsp;·&nbsp;
-          <strong>D</strong> — Auto-approved
-        </div>
-      </div>`;
+  PROFICIENCY_LIST.forEach(function(prof){
+    var unit = PROF_UNITS[prof]||'per hr';
+    var key = prof.replace(/[\/\s]/g,'-');
+    var el = document.createElement('div');
+    el.className = 'prof-item'; el.id = 'pi-'+key;
+    el.innerHTML = '<div class="prof-header" onclick="toggleProf(\''+key+'\',\''+prof+'\')" id="ph-'+key+'">'
+      +'<div class="prof-check" id="pc-'+key+'"></div>'
+      +'<div class="prof-name">'+esc(prof)+'</div>'
+      +'<button class="prof-primary-btn" id="pp-'+key+'" onclick="event.stopPropagation();setPrimary(\''+key+'\',\''+prof+'\')">&#9733; Primary</button>'
+      +'</div>'
+      +'<div class="prof-detail" id="pd-'+key+'">'
+        +'<div class="prof-detail-row">'
+          +'<div><div style="font-size:11px;color:var(--blue);margin-bottom:4px">Grade</div>'
+          +'<select class="fi" id="pg-'+key+'" style="padding:8px 10px;font-size:13px">'
+          +'<option value="">Select</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>'
+          +'</select></div>'
+          +'<div><div style="font-size:11px;color:var(--blue);margin-bottom:4px">Rate ('+esc(unit)+')</div>'
+          +'<input class="fi" id="pr-'+key+'" type="number" placeholder="0" style="padding:8px 10px;font-size:13px"></div>'
+        +'</div>'
+        +'<div class="grade-helper"><strong>A</strong> Admin upgrade only &middot; <strong>B</strong> Refs+approved &middot; <strong>C</strong> Exp+approved &middot; <strong>D</strong> Auto-approved</div>'
+      +'</div>';
     grid.appendChild(el);
   });
 }
-function toggleProf(prof) {
-  const key = prof.replace(/\//g,'-');
-  const header = document.getElementById('ph-'+key);
-  const detail = document.getElementById('pd-'+key);
-  const check = document.getElementById('pc-'+key);
-  const isOn = header.classList.toggle('selected');
+function toggleProf(key, prof){
+  var header = document.getElementById('ph-'+key);
+  var detail = document.getElementById('pd-'+key);
+  var check  = document.getElementById('pc-'+key);
+  var isOn = header.classList.toggle('selected');
   check.innerHTML = isOn ? '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>' : '';
   detail.classList.toggle('open', isOn);
-  if (!isOn) { delete S.proficiencies[prof]; }
-  else { if (!S.proficiencies[prof]) S.proficiencies[prof] = { grade:'', rate:'', primary:false }; }
+  if(!isOn) delete S.proficiencies[prof];
+  else if(!S.proficiencies[prof]) S.proficiencies[prof] = {grade:'',rate:'',primary:false};
 }
-function setPrimary(prof) {
-  // Clear all primaries
-  PROFICIENCY_LIST.forEach(p => {
-    const k = p.replace(/\//g,'-');
-    document.getElementById('pp-'+k)?.classList.remove('is-primary');
-    if (S.proficiencies[p]) S.proficiencies[p].primary = false;
+function setPrimary(key, prof){
+  PROFICIENCY_LIST.forEach(function(p){
+    var k = p.replace(/[\/\s]/g,'-');
+    var btn = document.getElementById('pp-'+k);
+    if(btn) btn.classList.remove('is-primary');
+    if(S.proficiencies[p]) S.proficiencies[p].primary = false;
   });
-  const key = prof.replace(/\//g,'-');
-  document.getElementById('pp-'+key)?.classList.add('is-primary');
-  if (!S.proficiencies[prof]) {
-    // auto-select if not already
-    toggleProf(prof);
-  }
-  S.proficiencies[prof] = S.proficiencies[prof] || {};
+  var btn = document.getElementById('pp-'+key);
+  if(btn) btn.classList.add('is-primary');
+  if(!S.proficiencies[prof]){ toggleProf(key, prof); }
+  if(!S.proficiencies[prof]) S.proficiencies[prof] = {};
   S.proficiencies[prof].primary = true;
 }
-function goToVendorReview() {
-  // Collect current values
-  const selected = PROFICIENCY_LIST.filter(p => document.getElementById('ph-'+p.replace(/\//g,'-'))?.classList.contains('selected'));
-  if (!selected.length) return alert('Select at least one proficiency.');
+function goToVendorReview(){
+  var selected = PROFICIENCY_LIST.filter(function(p){ var k=p.replace(/[\/\s]/g,'-'); return document.getElementById('ph-'+k) && document.getElementById('ph-'+k).classList.contains('selected'); });
+  if(!selected.length) return alert('Select at least one proficiency.');
   S.proficiencies = {};
-  selected.forEach(prof => {
-    const k = prof.replace(/\//g,'-');
-    const grade = document.getElementById('pg-'+k)?.value || '';
-    const rate = document.getElementById('pr-'+k)?.value || '';
-    const rate2 = document.getElementById('pr2-'+k)?.value || '';
-    const primary = document.getElementById('pp-'+k)?.classList.contains('is-primary');
-    S.proficiencies[prof] = { grade, rate, rate2, primary };
+  selected.forEach(function(prof){
+    var k = prof.replace(/[\/\s]/g,'-');
+    var grade = (document.getElementById('pg-'+k)||{}).value||'';
+    var rate  = (document.getElementById('pr-'+k)||{}).value||'';
+    var primary = document.getElementById('pp-'+k) && document.getElementById('pp-'+k).classList.contains('is-primary');
+    S.proficiencies[prof] = {grade:grade,rate:rate,primary:primary};
   });
-  const hasPrimary = Object.values(S.proficiencies).some(p=>p.primary);
-  if (!hasPrimary) return alert('Please set one proficiency as your Primary role (tap ★ Primary).');
-  // Build review
-  const content = document.getElementById('vendorReviewContent');
-  const primaryProf = Object.entries(S.proficiencies).find(([,v])=>v.primary)?.[0] || '';
-  content.innerHTML = `
-    <div style="font-size:13px;color:var(--muted);margin-bottom:12px">Review your details before submitting.</div>
-    <div style="font-size:13px;margin-bottom:8px"><strong>Name:</strong> ${esc(S.newUser.name)}</div>
-    <div style="font-size:13px;margin-bottom:8px"><strong>Primary Role:</strong> <span style="color:var(--blue);font-weight:600">${esc(primaryProf)}</span></div>
-    <div style="font-size:12px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin:12px 0 6px">Proficiencies</div>
-    ${Object.entries(S.proficiencies).map(([name,v]) => {
-      const unit = PROF_UNITS[name]||'hr';
-      return `<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
-        <strong>${esc(name)}</strong>${v.primary?' ★':''}
-        <span style="color:var(--muted);margin-left:8px">Grade: ${v.grade||'—'} · $${v.rate||'0'}/${unit}${v.rate2?' · $'+v.rate2+'/renewal':''}</span>
-      </div>`;
-    }).join('')}`;
+  if(!Object.values(S.proficiencies).some(function(p){ return p.primary; })) return alert('Please set one Primary role (tap star).');
+  var primaryProf = Object.keys(S.proficiencies).find(function(k){ return S.proficiencies[k].primary; })||'';
+  var html = '<div style="font-size:13px;color:var(--muted);margin-bottom:12px">Review before submitting.</div>'
+    +'<div style="font-size:13px;margin-bottom:8px"><strong>Name:</strong> '+esc(S.newUser.name)+'</div>'
+    +'<div style="font-size:13px;margin-bottom:8px"><strong>Primary Role:</strong> <span style="color:var(--blue);font-weight:600">'+esc(primaryProf)+'</span></div>'
+    +'<div style="font-size:12px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin:12px 0 6px">Proficiencies</div>';
+  Object.keys(S.proficiencies).forEach(function(name){
+    var v = S.proficiencies[name];
+    var unit = PROF_UNITS[name]||'hr';
+    html += '<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><strong>'+esc(name)+'</strong>'+(v.primary?' &#9733;':'')+' <span style="color:var(--muted);margin-left:8px">Grade: '+(v.grade||'-')+' &middot; $'+(v.rate||'0')+'/'+unit+'</span></div>';
+  });
+  document.getElementById('vendorReviewContent').innerHTML = html;
   showScreen('screen-vendor-review');
 }
-async function submitVendorProf() {
-  const profJson = JSON.stringify(S.proficiencies);
-  const primaryProf = Object.entries(S.proficiencies).find(([,v])=>v.primary)?.[0]||'';
-  try {
-    await apiCall({ action:'addPerson', person:{ name:S.newUser.name, email:S.newUser.email, role:'vendor', proficiencies:profJson, primaryProf, status:'pending' }});
-  } catch(e) {}
-  document.getElementById('confirmMsg').textContent = 'Submitted. You\'ll get an email once your account is approved.';
+function submitVendorProf(){
+  var primaryProf = Object.keys(S.proficiencies).find(function(k){ return S.proficiencies[k].primary; })||'';
+  apiCall({action:'addPerson',person:{name:S.newUser.name,email:S.newUser.email,role:'vendor',proficiencies:JSON.stringify(S.proficiencies),primaryProf:primaryProf,createdAt:new Date().toISOString()}}).catch(function(){});
+  document.getElementById('confirmMsg').textContent = "Submitted. You'll get an email once your account is approved.";
   showScreen('screen-confirm');
 }
 
-// ════════════════════════════════════════════════════════
 // DATA
-// ════════════════════════════════════════════════════════
-async function loadData() {
-  try {
-    const r = await apiCall({ action:'getData' });
-    if (r.success) {
-      S.jobs = r.jobs||[]; S.vendors = r.vendors||[];
-      S.properties = r.properties||[]; S.people = r.people||[];
+function loadData(){
+  return apiCall({action:'getData'}).then(function(r){
+    if(r.success){
+      S.jobs=r.jobs||[]; S.vendors=r.vendors||[];
+      S.properties=r.properties||[]; S.people=r.people||[];
+      S.jobTypes=r.jobTypes||[];
     }
-  } catch(e) {
-    S.jobs = getDemoJobs(); S.vendors = getDemoVendors();
-    S.properties = getDemoProperties(); S.people = getDemoPeople();
-  }
-  populateWelcomeDropdown();
+    populateWelcomeDropdown();
+  }).catch(function(){
+    S.jobs=getDemoJobs(); S.vendors=getDemoVendors();
+    S.properties=getDemoProperties(); S.people=getDemoPeople();
+    S.jobTypes=[];
+    populateWelcomeDropdown();
+  });
 }
-function populateJobTypes() {
-  const el = document.getElementById('dCategory');
-  if (!el) return;
-  const types = S.jobTypes && S.jobTypes.length ? S.jobTypes : ['Electrical','Plumbing','Lawn Mowing','Snow Removal','Landscaping','Cleaning','Repairs','Painting','Flooring','Roofing','HVAC','General Maintenance'];
-  el.innerHTML = '<option value="">Job Type</option>' + types.map(t=>`<option value="${t}">${t}</option>`).join('') + '<option value="__other">Other…</option>';
-  el.onchange = function(){ if(this.value==='__other'){ const v=prompt('Enter job type:'); if(v){const o=document.createElement('option');o.value=v;o.text=v;this.add(o,this.options.length-1);this.value=v;} else this.value=''; } };
-}
-function populateVendorDropdowns() {
-  const opts = '<option value="">— Unassigned —</option>' + S.vendors.map(v=>`<option value="${esc(v.name)}">${esc(vendorLabel(v))}</option>`).join('');
+function populateVendorDropdowns(){
+  var opts = '<option value="">&#8212; Unassigned &#8212;</option>'+S.vendors.map(function(v){ return '<option value="'+esc(v.name)+'">'+esc(vendorLabel(v))+'</option>'; }).join('');
   document.getElementById('dAssign').innerHTML = opts;
-  document.getElementById('fVendor').innerHTML = '<option value="">All Vendors</option>' + S.vendors.map(v=>`<option value="${esc(v.name)}">${esc(v.name)}</option>`).join('');
+  document.getElementById('fVendor').innerHTML = '<option value="">All Vendors</option>'+S.vendors.map(function(v){ return '<option value="'+esc(v.name)+'">'+esc(v.name)+'</option>'; }).join('');
 }
-function populatePropertyDropdown() {
-  const base = '<option value="">— Select property —</option>' + S.properties.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('') + '<option value="__add">+ Add New…</option>';
+function populatePropertyDropdown(){
+  var base = '<option value="">&#8212; Select property &#8212;</option>'+S.properties.map(function(p){ return '<option value="'+esc(p)+'">'+esc(p)+'</option>'; }).join('')+'<option value="__add">+ Add New&#8230;</option>';
   document.getElementById('dProperty').innerHTML = base;
-  document.getElementById('fProperty').innerHTML = '<option value="">All Properties</option>' + S.properties.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  document.getElementById('fProperty').innerHTML = '<option value="">All Properties</option>'+S.properties.map(function(p){ return '<option value="'+esc(p)+'">'+esc(p)+'</option>'; }).join('');
   document.getElementById('dProperty').onchange = function(){ if(this.value==='__add'){ openModal('addPropModal'); this.value=''; } };
 }
-function vendorLabel(v) {
-  const parts = [v.name]; if(v.primaryProf||v.title) parts.push(v.primaryProf||v.title); if(v.grade) parts.push(v.grade); if(v.rate) parts.push('$'+v.rate+'/hr');
+function populateJobTypes(){
+  var el = document.getElementById('dCategory'); if(!el) return;
+  var types = S.jobTypes && S.jobTypes.length ? S.jobTypes : ['Electrical','Plumbing','Lawn Mowing','Snow Removal','Landscaping','Cleaning','Repairs','Painting','Flooring','Roofing','HVAC','General Maintenance'];
+  el.innerHTML = '<option value="">Job Type</option>'+types.map(function(t){ return '<option value="'+esc(t)+'">'+esc(t)+'</option>'; }).join('')+'<option value="__other">Other&#8230;</option>';
+  el.onchange = function(){
+    if(this.value==='__other'){
+      var v = prompt('Enter job type:');
+      if(v){ var o=document.createElement('option'); o.value=v; o.text=v; this.add(o,this.options.length-1); this.value=v; }
+      else this.value='';
+    }
+  };
+}
+function vendorLabel(v){
+  var parts = [v.name];
+  if(v.primaryProf||v.title) parts.push(v.primaryProf||v.title);
+  if(v.grade) parts.push(v.grade);
+  if(v.rate) parts.push('$'+v.rate+'/hr');
   return parts.join('  |  ');
 }
 
-// ════════════════════════════════════════════════════════
 // PRIORITY HELPERS
-// ════════════════════════════════════════════════════════
-function priorityToDate(priority) {
-  const days = PRIORITY_DAYS[priority];
-  if (days === undefined) return '';
-  const d = new Date(); d.setDate(d.getDate()+days);
+function priorityToDate(p){
+  var days = PRIORITY_DAYS[p];
+  if(days===undefined) return '';
+  var d = new Date(); d.setDate(d.getDate()+days);
   return d.toISOString().slice(0,10);
 }
-function dateToPriority(dateStr) {
-  if (!dateStr) return '';
-  const days = Math.round((new Date(dateStr)-new Date())/(86400000));
-  if (days <= 0) return 'Immediate';
-  if (days <= 2) return 'High';
-  if (days <= 7) return 'Medium';
+function dateToPriority(s){
+  if(!s) return '';
+  var days = Math.round((new Date(s)-new Date())/86400000);
+  if(days<=0) return 'Immediate';
+  if(days<=2) return 'High';
+  if(days<=7) return 'Medium';
   return 'Low';
 }
-function onPriorityChange() {
-  const p = document.getElementById('dPriority').value;
-  if (p) document.getElementById('dDue').value = priorityToDate(p);
+function onPriorityChange(){ var p=document.getElementById('dPriority').value; if(p) document.getElementById('dDue').value=priorityToDate(p); }
+function onDueDateChange(){ var d=document.getElementById('dDue').value; if(d) document.getElementById('dPriority').value=dateToPriority(d); }
+function fmtDate(s){
+  if(!s) return '';
+  var d = new Date(s+'T12:00:00');
+  return (d.getMonth()+1)+'/'+(d.getDate())+'/'+String(d.getFullYear()).slice(2);
 }
-function onDueDateChange() {
-  const d = document.getElementById('dDue').value;
-  if (d) document.getElementById('dPriority').value = dateToPriority(d);
+function fmtDateTime(s){
+  if(!s) return '';
+  var d = new Date(s);
+  var mo=d.getMonth()+1, dy=d.getDate(), yr=String(d.getFullYear()).slice(2);
+  var h=d.getHours(), m=('0'+d.getMinutes()).slice(-2);
+  var ampm=h>=12?'pm':'am'; var h12=h%12||12;
+  return mo+'/'+dy+'/'+yr+', '+h12+':'+m+ampm;
 }
-function fmtDate(s) {
-  if (!s) return '';
-  const d = new Date(s+'T12:00:00');
-  return `${d.getMonth()+1}/${d.getDate()}/${String(d.getFullYear()).slice(2)}`;
-}
-function fmtDateTime(s) {
-  if (!s) return '';
-  const d = new Date(s);
-  const mo = d.getMonth()+1, dy = d.getDate(), yr = String(d.getFullYear()).slice(2);
-  const h = d.getHours(), m = String(d.getMinutes()).padStart(2,'0');
-  const ampm = h >= 12 ? 'pm' : 'am';
-  const h12 = h % 12 || 12;
-  return `${mo}/${dy}/${yr}, ${h12}:${m}${ampm}`;
-}
-const EST_HOURS_LEFT  = ['1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
-const EST_HOURS_RIGHT = ['1 day','2 days','3 days','4 days','5 days','6 days','7 days','8+ days'];
-const EST_HOURS_OPTIONS = [...EST_HOURS_LEFT, ...EST_HOURS_RIGHT];
-function estHoursOptionsHTML(selected) {
-  return '<option value="">Est. Hours</option>' +
-    EST_HOURS_OPTIONS.map(o => `<option value="${o}"${selected===o?' selected':''}>${o}</option>`).join('');
-}
-function priorityClass(p) {
-  const map = { Need:'p-need', Low:'p-low', Medium:'p-medium', High:'p-high', Immediate:'p-immediate', Done:'p-done', Assigned:'p-assigned', Open:'p-need' };
-  return map[p]||'p-open';
+function priorityClass(p){
+  var map={Need:'p-need',Low:'p-low',Medium:'p-medium',High:'p-high',Immediate:'p-immediate',Done:'p-done',Open:'p-open',Assigned:'p-assigned'};
+  return map[p]||'p-need';
 }
 
+// JOB CARD HTML
+function jobCardHTML(j, showAssign){
+  var status = j.status||'Need';
+  var pClass = priorityClass(status);
+  var canUploadUser   = (S.role==='user' && j.submittedBy===S.userName) || S.role==='admin';
+  var canUploadVendor = S.role==='vendor' && j.assignTo===S.vendorName;
+  var userPhotoUrl    = j.userPhotoUrl||j.photoUrl||'';
 
-
-// ═══════════════════════════════
-// EST HOURS MODAL
-// ═══════════════════════════════
-
-function openEstHoursForm() {
-  S.pendingEstJobId = '__form__';
-  const current = document.getElementById('dEstHours').value || '';
-  const container = document.getElementById('estHoursBtns');
-  const btnStyle = (o) => `
-    padding:9px 8px;border-radius:8px;border:1px solid ${o===current?'var(--blue)':'#e0e0e0'};
-    background:${o===current?'var(--blue-bg)':'#f5f5f5'};color:${o===current?'var(--blue)':'#111'};
-    font-family:'DM Sans',sans-serif;font-size:13px;font-weight:${o===current?'700':'400'};
-    cursor:pointer;text-align:center;width:100%;display:block;
-  `;
-  const mkCol = (label, items) => `
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:2px">${label}</div>
-      ${items.map(o=>`<button onclick="setEstHours('${o}')" style="${btnStyle(o)}">${o}</button>`).join('')}
-    </div>`;
-  container.innerHTML = mkCol('Hours', EST_HOURS_LEFT) + mkCol('Days', EST_HOURS_RIGHT);
-  openModal('estHoursModal');
-}
-
-function openEstHoursModal(jobId) {
-  S.pendingEstJobId = jobId;
-  const job = S.jobs.find(j=>j.id===jobId);
-  const current = job?.estHours||'';
-  const container = document.getElementById('estHoursBtns');
-  const btnStyle = (o) => `
-    padding:9px 8px;border-radius:8px;border:1px solid ${o===current?'var(--blue)':'#e0e0e0'};
-    background:${o===current?'var(--blue-bg)':'#f5f5f5'};color:${o===current?'var(--blue)':'#111'};
-    font-family:'DM Sans',sans-serif;font-size:13px;font-weight:${o===current?'700':'400'};
-    cursor:pointer;text-align:center;width:100%;display:block;
-  `;
-  const mkCol = (label, items) => `
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:2px">${label}</div>
-      ${items.map(o=>`<button onclick="setEstHours('${o}')" style="${btnStyle(o)}">${o}</button>`).join('')}
-    </div>`;
-  container.innerHTML = mkCol('Hours', EST_HOURS_LEFT) + mkCol('Days', EST_HOURS_RIGHT);
-  openModal('estHoursModal');
-}
-async function setEstHours(val) {
-  const id = S.pendingEstJobId;
-  // Form context — just update the button label and hidden input
-  if (id === '__form__') {
-    document.getElementById('dEstHours').value = val;
-    const btn = document.getElementById('dEstHoursBtn');
-    if (btn) { btn.textContent = val; btn.style.color = '#111'; }
-    closeModal('estHoursModal');
-    return;
+  var right = '<button class="jc-pill '+pClass+'" id="pBtn-'+esc(j.id)+'">'+esc(status)+'</button>';
+  right += '<button class="jc-pill" id="eBtn-'+esc(j.id)+'" style="color:var(--blue);border-color:var(--blue-border)">'+(j.estHours||'Est. Hours')+'</button>';
+  if(showAssign){
+    var vopts = '<option value="">Unassigned</option>';
+    S.vendors.forEach(function(v){ vopts += '<option value="'+esc(v.name)+'"'+(j.assignTo===v.name?' selected':'')+'>'+esc(vendorLabel(v))+'</option>'; });
+    right += '<select class="jc-pill assign-select" id="aBtn-'+esc(j.id)+'">'+vopts+'</select>';
   }
-  const job = S.jobs.find(j=>j.id===id);
-  if (!job) return closeModal('estHoursModal');
-  job.estHours = val;
-  closeModal('estHoursModal');
-  try { await apiCall({ action:'updateJob', id, fields:{ estHours:val }}); } catch(e){}
-  if (S.role==='vendor') { renderVendorJobs(false); renderVendorJobs(true); }
-  else renderAllJobs();
-  if (document.getElementById('jobDetailBackdrop').style.display === 'flex') openJobDetail(id);
+
+  var userPill = userPhotoUrl
+    ? '<button class="jc-photo-pill has-photo" id="upBtn-'+esc(j.id)+'">&#128247; See User Photo</button>'
+    : (canUploadUser
+      ? '<button class="jc-photo-pill can-upload" id="upBtn-'+esc(j.id)+'">&#128247; Add User Photo</button>'
+      : '<button class="jc-photo-pill no-photo" disabled>No User Photo</button>');
+
+  var vendorPill = j.vendorPhotoUrl
+    ? '<button class="jc-photo-pill vendor-photo" id="vpBtn-'+esc(j.id)+'">&#128247; See Vendor Photo</button>'
+    : (canUploadVendor
+      ? '<button class="jc-photo-pill can-upload" id="vpBtn-'+esc(j.id)+'">&#128247; Add Vendor Photo</button>'
+      : '<button class="jc-photo-pill no-vendor" disabled>No Vendor Photo</button>');
+
+  return '<div class="job-card" id="card-'+esc(j.id)+'">'
+    +'<div class="jc-top">'
+      +'<div class="jc-left" id="jcl-'+esc(j.id)+'">'
+        +'<div class="jc-title">'+esc(j.property||'No property')+'</div>'
+        +(j.location ? '<div class="jc-row">'+esc(j.location)+'</div>' : '')
+        +'<div class="jc-row">'+(j.assignTo?'Assigned':'Unassigned')+' &#8212; '+fmtDateTime(j.submittedAt||j.date||'')+'</div>'
+        +(j.due ? '<div class="jc-row">Due &#8212; '+fmtDate(j.due)+'</div>' : '')
+        +'<div class="jc-row">'+esc(j.category||'&#8212;')+(j.note?' &#8212; '+esc(j.note):'')+'</div>'
+      +'</div>'
+      +'<div class="jc-divider"></div>'
+      +'<div class="jc-right">'+right+'</div>'
+    +'</div>'
+    +'<div class="jc-photo-row">'+userPill+vendorPill+'</div>'
+    +'</div>';
 }
 
-// ═══════════════════════════════
-// JOB DETAIL SHEET
-// ═══════════════════════════════
-const P_COLOR = { Need:'#666', Low:'#7a5c00', Medium:'#c47a00', High:'#c45000', Immediate:'#c62828', Done:'#2e7d32', Assigned:'#1565c0', Open:'#666' };
-const P_BG    = { Need:'rgba(160,160,160,.1)', Low:'rgba(180,140,0,.08)', Medium:'rgba(255,180,80,.12)', High:'rgba(230,100,30,.1)', Immediate:'rgba(198,40,40,.08)', Done:'rgba(46,125,50,.08)', Assigned:'rgba(21,101,192,.08)', Open:'rgba(160,160,160,.1)' };
+// Wire card buttons after render
+function wireCardButtons(j, showAssign){
+  var jcl = document.getElementById('jcl-'+j.id);
+  if(jcl) jcl.onclick = function(){ openJobDetail(j.id); };
 
-function openJobDetail(jobId) {
-  const j = S.jobs.find(x => x.id === jobId);
-  if (!j) return;
+  var pb = document.getElementById('pBtn-'+j.id);
+  if(pb) pb.onclick = function(){ openPriorityModal(j.id); };
 
-  const status = j.status || 'Need';
-  const pClass = priorityClass(status);
-  const vendor = S.vendors.find(v => v.name === j.assignTo);
-  const vendorLine = vendor
-    ? [vendor.name, vendor.primaryProf||vendor.title, vendor.grade, vendor.rate ? '$'+vendor.rate+'/hr' : null].filter(Boolean).join('  ·  ')
-    : (j.assignTo || 'Unassigned');
+  var eb = document.getElementById('eBtn-'+j.id);
+  if(eb) eb.onclick = function(){ openEstHoursModal(j.id); };
 
-  const canUploadUser   = (S.role === 'user' && j.submittedBy === S.userName) || S.role === 'admin';
-  const canUploadVendor = S.role === 'vendor' && j.assignTo === S.vendorName;
-  const userPhotoUrl    = j.userPhotoUrl || j.photoUrl || '';
+  if(showAssign){
+    var ab = document.getElementById('aBtn-'+j.id);
+    if(ab) ab.onchange = function(){ assignJob(j.id, this.value); };
+  }
 
-  document.getElementById('ddHeader').innerHTML =
-    '<div class="detail-header-left">' +
-      '<div class="detail-title">' + esc(j.property || 'No property') + '</div>' +
-      (j.location ? '<div class="detail-location">' + esc(j.location) + '</div>' : '') +
-      '<div class="detail-row">' + (j.assignTo ? 'Assigned' : 'Unassigned') + ' — ' + fmtDateTime(j.submittedAt || j.date || '') + '</div>' +
-      (j.due ? '<div class="detail-row">Due — ' + fmtDate(j.due) + '</div>' : '') +
-      '<div class="detail-row">' + esc(j.category || '—') + (j.note ? ' — ' + esc(j.note) : '') + '</div>' +
-    '</div>' +
-    '<div class="detail-header-divider"></div>' +
-    '<div class="detail-header-right">' +
-      '<button class="jc-pill ' + pClass + '" onclick="openPriorityModal('' + esc(j.id) + '')">' + esc(status) + '</button>' +
-      '<button class="jc-pill" onclick="openEstHoursModal('' + esc(j.id) + '')" style="color:var(--blue);border-color:var(--blue-border)">' + (j.estHours || 'Est. Hours') + '</button>' +
-      '<select class="jc-pill assign-select" onchange="assignJob('' + esc(j.id) + '',this.value)">' +
-        '<option value="">Unassigned</option>' +
-        S.vendors.map(v => '<option value="' + esc(v.name) + '"' + (j.assignTo === v.name ? ' selected' : '') + '>' + esc(vendorLabel(v)) + '</option>').join('') +
-      '</select>' +
-      (j.completedAt ? '<span class="jc-pill" style="color:var(--muted);font-size:10px;cursor:default">Done ' + fmtDate(j.completedAt) + '</span>' : '') +
-    '</div>';
+  var upBtn = document.getElementById('upBtn-'+j.id);
+  if(upBtn){
+    var userPhotoUrl = j.userPhotoUrl||j.photoUrl||'';
+    if(userPhotoUrl){
+      upBtn.onclick = function(){ openFullscreen(userPhotoUrl, 'Work Order Photo'); };
+    } else {
+      upBtn.onclick = function(){ triggerUserPhotoUpload(j.id); };
+    }
+  }
+  var vpBtn = document.getElementById('vpBtn-'+j.id);
+  if(vpBtn){
+    if(j.vendorPhotoUrl){
+      vpBtn.onclick = function(){ openFullscreen(j.vendorPhotoUrl, 'Vendor Photo'); };
+    } else {
+      vpBtn.onclick = function(){ triggerVendorPhotoUpload(j.id); };
+    }
+  }
+}
 
-  document.getElementById('ddBody').innerHTML =
-    (j.note ?
-      '<div><div class="detail-slabel">Notes</div><div class="detail-value">' + esc(j.note) + '</div></div>'
-    : '') +
-    '<div><div class="detail-slabel">Assigned To</div><div class="detail-value">' + esc(vendorLine) + '</div></div>' +
-    '<div><div class="detail-slabel">Photos</div>' +
-      '<div class="detail-photos">' +
-        '<div class="detail-photo-block">' +
-          '<div class="detail-plabel">Work Order Photo</div>' +
-          (userPhotoUrl
-            ? '<img class="detail-pimg" src="' + esc(userPhotoUrl) + '" onclick="openFullscreen('' + esc(userPhotoUrl) + '','Work Order Photo')" alt="photo">'
-            : (canUploadUser
-              ? '<button class="jc-photo-pill can-upload" onclick="triggerUserPhotoUpload('' + esc(j.id) + '')" style="height:60px;display:flex;align-items:center;justify-content:center">📷 Upload User Photo</button>'
-              : '<div class="detail-pnone">No photo attached</div>')) +
-        '</div>' +
-        '<div class="detail-photo-block">' +
-          '<div class="detail-plabel">Vendor Completion Photo</div>' +
-          (j.vendorPhotoUrl
-            ? '<img class="detail-pimg" src="' + esc(j.vendorPhotoUrl) + '" onclick="openFullscreen('' + esc(j.vendorPhotoUrl) + '','Vendor Photo')" alt="vendor photo">'
-            : (canUploadVendor
-              ? '<button class="jc-photo-pill can-upload" onclick="triggerVendorPhotoUpload('' + esc(j.id) + '')" style="height:60px;display:flex;align-items:center;justify-content:center">📷 Upload Vendor Photo</button>'
-              : '<div class="detail-pnone">Pending vendor upload</div>')) +
-        '</div>' +
-      '</div>' +
-    '</div>';
+// RENDER ALL JOBS
+function renderAllJobs(){
+  var sf = document.getElementById('fStatus').value;
+  var vf = document.getElementById('fVendor').value;
+  var pf = document.getElementById('fProperty').value;
+  var jobs = S.jobs.filter(function(j){
+    return (!sf || (j.status||'Need')===sf) && (!vf || j.assignTo===vf) && (!pf || j.property===pf);
+  }).sort(function(a,b){ return new Date(b.submittedAt||0)-new Date(a.submittedAt||0); });
+  var list = document.getElementById('allJobsList');
+  if(!jobs.length){ list.innerHTML='<div class="empty-state"><div style="font-size:32px">&#128235;</div><div style="font-size:13px">No jobs match</div></div>'; return; }
+  list.innerHTML = jobs.map(function(j){ return jobCardHTML(j,true); }).join('');
+  jobs.forEach(function(j){ wireCardButtons(j,true); });
+}
+
+// RENDER VENDOR JOBS
+function renderVendorJobs(done){
+  var mine = S.jobs.filter(function(j){ return j.assignTo===S.vendorName; });
+  var jobs = done ? mine.filter(function(j){ return j.status==='Done'; }) : mine.filter(function(j){ return j.status!=='Done'; });
+  var listId = done ? 'vendDoneList' : 'vendActiveList';
+  var list = document.getElementById(listId);
+  if(!jobs.length){ list.innerHTML='<div class="empty-state"><div style="font-size:32px">'+(done?'&#9989;':'&#128235;')+'</div><div style="font-size:13px">'+(done?'No completed jobs':'No active jobs')+'</div></div>'; return; }
+  list.innerHTML = jobs.map(function(j){ return jobCardHTML(j,false); }).join('');
+  jobs.forEach(function(j){ wireCardButtons(j,false); });
+}
+
+// JOB DETAIL
+function openJobDetail(jobId){
+  var j = S.jobs.find(function(x){ return x.id===jobId; });
+  if(!j) return;
+  var status = j.status||'Need';
+  var pClass = priorityClass(status);
+  var vendor = S.vendors.find(function(v){ return v.name===j.assignTo; });
+  var vendorLine = vendor
+    ? [vendor.name, vendor.primaryProf||vendor.title, vendor.grade, vendor.rate?'$'+vendor.rate+'/hr':null].filter(Boolean).join('  \u00b7  ')
+    : (j.assignTo||'Unassigned');
+  var canUploadUser   = (S.role==='user' && j.submittedBy===S.userName) || S.role==='admin';
+  var canUploadVendor = S.role==='vendor' && j.assignTo===S.vendorName;
+  var userPhotoUrl    = j.userPhotoUrl||j.photoUrl||'';
+
+  // Build vendor options
+  var vopts = '<option value="">Unassigned</option>';
+  S.vendors.forEach(function(v){ vopts += '<option value="'+esc(v.name)+'"'+(j.assignTo===v.name?' selected':'')+'>'+esc(vendorLabel(v))+'</option>'; });
+
+  // Header
+  var hLeft = '<div class="detail-header-left">'
+    +'<div class="detail-title">'+esc(j.property||'No property')+'</div>'
+    +(j.location ? '<div class="detail-location">'+esc(j.location)+'</div>' : '')
+    +'<div class="detail-row">'+(j.assignTo?'Assigned':'Unassigned')+' - '+fmtDateTime(j.submittedAt||j.date||'')+'</div>'
+    +(j.due ? '<div class="detail-row">Due - '+fmtDate(j.due)+'</div>' : '')
+    +'<div class="detail-row">'+esc(j.category||'-')+(j.note?' - '+esc(j.note):'')+'</div>'
+    +'</div>';
+
+  var hRight = '<div class="detail-header-right">'
+    +'<button class="jc-pill '+pClass+'" id="ddPri">'+esc(status)+'</button>'
+    +'<button class="jc-pill" id="ddEst" style="color:var(--blue);border-color:var(--blue-border)">'+(j.estHours||'Est. Hours')+'</button>'
+    +'<select class="jc-pill assign-select" id="ddAsgn">'+vopts+'</select>'
+    +(j.completedAt ? '<span class="jc-pill" style="color:var(--muted);font-size:10px;cursor:default">Done '+fmtDate(j.completedAt)+'</span>' : '')
+    +'</div>';
+
+  document.getElementById('ddHeader').innerHTML = hLeft+'<div class="detail-header-divider"></div>'+hRight;
+
+  // Wire detail buttons
+  document.getElementById('ddPri').onclick   = function(){ openPriorityModal(j.id); };
+  document.getElementById('ddEst').onclick   = function(){ openEstHoursModal(j.id); };
+  document.getElementById('ddAsgn').onchange = function(){ assignJob(j.id, this.value); };
+
+  // Body
+  var userPhotoHTML = userPhotoUrl
+    ? '<img class="detail-pimg" id="ddUPhoto" src="'+esc(userPhotoUrl)+'" alt="photo">'
+    : (canUploadUser
+      ? '<button class="jc-photo-pill can-upload" id="ddUUpload" style="height:60px;display:flex;align-items:center;justify-content:center">Upload User Photo</button>'
+      : '<div class="detail-pnone">No photo attached</div>');
+
+  var vendorPhotoHTML = j.vendorPhotoUrl
+    ? '<img class="detail-pimg" id="ddVPhoto" src="'+esc(j.vendorPhotoUrl)+'" alt="vendor photo">'
+    : (canUploadVendor
+      ? '<button class="jc-photo-pill can-upload" id="ddVUpload" style="height:60px;display:flex;align-items:center;justify-content:center">Upload Vendor Photo</button>'
+      : '<div class="detail-pnone">Pending vendor upload</div>');
+
+  var bodyHTML = (j.note ? '<div><div class="detail-slabel">Notes</div><div class="detail-value">'+esc(j.note)+'</div></div>' : '')
+    +'<div><div class="detail-slabel">Assigned To</div><div class="detail-value">'+esc(vendorLine)+'</div></div>'
+    +'<div><div class="detail-slabel">Photos</div><div class="detail-photos">'
+      +'<div class="detail-photo-block"><div class="detail-plabel">Work Order Photo</div>'+userPhotoHTML+'</div>'
+      +'<div class="detail-photo-block"><div class="detail-plabel">Vendor Completion Photo</div>'+vendorPhotoHTML+'</div>'
+    +'</div></div>';
+
+  document.getElementById('ddBody').innerHTML = bodyHTML;
+
+  // Wire photo buttons
+  var uph = document.getElementById('ddUPhoto');
+  if(uph) uph.onclick = function(){ openFullscreen(userPhotoUrl,'Work Order Photo'); };
+  var vph = document.getElementById('ddVPhoto');
+  if(vph) vph.onclick = function(){ openFullscreen(j.vendorPhotoUrl,'Vendor Photo'); };
+  var uup = document.getElementById('ddUUpload');
+  if(uup) uup.onclick = function(){ triggerUserPhotoUpload(j.id); };
+  var vup = document.getElementById('ddVUpload');
+  if(vup) vup.onclick = function(){ triggerVendorPhotoUpload(j.id); };
 
   document.getElementById('jobDetailBackdrop').style.display = 'flex';
 }
-
-function closeJobDetail(e) {
-  if (e && e.target.id !== 'jobDetailBackdrop') return;
+function closeJobDetail(e){
+  if(e && e.target.id!=='jobDetailBackdrop') return;
   document.getElementById('jobDetailBackdrop').style.display = 'none';
 }
 
-// ════════════════════════════════════════════════════════
-// JOB CARD
-// ════════════════════════════════════════════════════════
-
-// ════════════════════════════════════════════════════════
-// FULLSCREEN PHOTO VIEWER
-// ════════════════════════════════════════════════════════
-function openFullscreen(url, title) {
-  const el = document.createElement('div');
-  el.className = 'fs-overlay';
-  el.innerHTML = `<span class="fs-close">✕</span><img class="fs-img" src="${esc(url)}" alt="${esc(title||'Photo')}">`;
-  el.onclick = () => el.remove();
-  document.body.appendChild(el);
-}
-
-// ════════════════════════════════════════════════════════
-// PHOTO UPLOAD FROM CARD
-// ════════════════════════════════════════════════════════
-function triggerUserPhotoUpload(jobId) {
-  S.pendingPhotoJobId = jobId;
-  const inp = document.getElementById('userPhotoUpload');
-  inp.value = '';
-  inp.click();
-}
-function triggerVendorPhotoUpload(jobId) {
-  S.pendingPhotoJobId = jobId;
-  const inp = document.getElementById('vendorPhotoUpload');
-  inp.value = '';
-  inp.click();
-}
-async function handleUserPhotoUpload(input) {
-  const file = input.files[0]; if (!file) return;
-  await uploadJobPhoto(S.pendingPhotoJobId, file, 'user');
-}
-async function handleVendorPhotoUpload(input) {
-  const file = input.files[0]; if (!file) return;
-  await uploadJobPhoto(S.pendingPhotoJobId, file, 'vendor');
-}
-async function uploadJobPhoto(jobId, file, type) {
-  const job = S.jobs.find(j=>j.id===jobId); if (!job) return;
-  // Show uploading state on the card
-  const card = document.getElementById('card-'+jobId);
-  const pills = card?.querySelectorAll('.jc-photo-pill');
-  const targetPill = type==='user' ? pills?.[0] : pills?.[1];
-  if (targetPill) { targetPill.textContent = 'Uploading…'; targetPill.disabled = true; }
-
-  try {
-    const url = getUrl();
-    if (!url) throw new Error('No URL');
-    const b64 = await fileToBase64(file);
-    const r = await apiCall({
-      action:'uploadPhoto',
-      unit: job.property||'unknown',
-      category: type==='vendor' ? 'vendor-completion' : 'work-order',
-      filename: `${job.property||'job'}_${type}_${Date.now()}.jpg`,
-      mimeType: file.type||'image/jpeg',
-      base64: b64
-    });
-    if (!r.success) throw new Error(r.error);
-    const field = type==='vendor' ? 'vendorPhotoUrl' : 'userPhotoUrl';
-    job[field] = r.viewUrl;
-    await apiCall({ action:'updateJob', id:jobId, fields:{ [field]: r.viewUrl }});
-  } catch(e) {
-    if (targetPill) { targetPill.textContent = 'Upload failed'; targetPill.disabled = false; }
-    return;
-  }
-  // Re-render
-  if (S.role==='vendor') { renderVendorJobs(false); renderVendorJobs(true); }
-  else renderAllJobs();
-  if (document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(jobId);
-}
-
-// ════════════════════════════════════════════════════════
-// PHOTO MODAL
-// ════════════════════════════════════════════════════════
-function openPhotoModal(url, title) {
-  document.getElementById('photoModalImg').src = url;
-  document.getElementById('photoModalTitle').textContent = title || 'Photo';
-  openModal('photoModal');
-}
-
-function jobCardHTML(j, showAssign) {
-  const status = j.status||'Need';
-  const pClass = priorityClass(status);
-
-  // Right column: status, est hours, assign
-  let right = `<button class="jc-pill ${pClass}" onclick="openPriorityModal('${esc(j.id)}')">${esc(status)}</button>`;
-  right += `<button class="jc-pill" onclick="openEstHoursModal('${esc(j.id)}')" style="color:var(--blue);border-color:var(--blue-border)">${j.estHours?esc(j.estHours):'Est. Hours'}</button>`;
-  if (showAssign) {
-    right += `<select class="jc-pill assign-select" onchange="assignJob('${esc(j.id)}',this.value)">
-      <option value="">Unassigned</option>
-      ${S.vendors.map(v=>`<option value="${esc(v.name)}" ${j.assignTo===v.name?'selected':''}>${esc(vendorLabel(v))}</option>`).join('')}
-    </select>`;
-  }
-
-  // Photo row — full width below both columns
-  const canUploadUser   = S.role==='user'&&j.submittedBy===S.userName || S.role==='admin';
-  const canUploadVendor = S.role==='vendor'&&j.assignTo===S.vendorName;
-
-  const userPill = (j.userPhotoUrl||j.photoUrl)
-    ? `<button class="jc-photo-pill has-photo" onclick="openFullscreen('${esc(j.userPhotoUrl||j.photoUrl)}','Work Order Photo')">📷 See User Photo</button>`
-    : canUploadUser
-      ? `<button class="jc-photo-pill can-upload" onclick="triggerUserPhotoUpload('${esc(j.id)}')">📷 Add User Photo</button>`
-      : `<button class="jc-photo-pill no-photo" disabled>No User Photo</button>`;
-
-  const vendorPill = j.vendorPhotoUrl
-    ? `<button class="jc-photo-pill vendor-photo" onclick="openFullscreen('${esc(j.vendorPhotoUrl)}','Vendor Photo')">📷 See User Photo</button>`
-    : canUploadVendor
-      ? `<button class="jc-photo-pill can-upload" onclick="triggerVendorPhotoUpload('${esc(j.id)}')">📷 Add Vendor Photo</button>`
-      : `<button class="jc-photo-pill no-vendor" disabled>No Vendor Photo</button>`;
-
-  return `<div class="job-card" id="card-${esc(j.id)}" style="flex-direction:column;padding:0">
-    <div style="display:flex;flex-direction:row;align-items:stretch;padding:12px 12px 10px">
-      <div class="jc-left" onclick="openJobDetail('${esc(j.id)}')" style="cursor:pointer">
-        <div class="jc-title">${esc(j.property||'No property')}</div>
-        ${j.location?`<div class="jc-row">${esc(j.location)}</div>`:''}
-        <div class="jc-row">${j.assignTo?'Assigned':'Unassigned'} — ${fmtDateTime(j.submittedAt||j.date||'')}</div>
-        ${j.due?`<div class="jc-row">Due — ${fmtDate(j.due)}</div>`:''}
-        <div class="jc-row">${esc(j.category||'—')}${j.note?' — '+esc(j.note):''}</div>
-      </div>
-      <div class="jc-divider"></div>
-      <div class="jc-right">${right}</div>
-    </div>
-    <div class="jc-photo-row" style="padding:8px 12px 10px;border-top:1px solid var(--border)">
-      ${userPill}
-      ${vendorPill}
-    </div>
-  </div>`;
-}
-
-// ════════════════════════════════════════════════════════
 // PRIORITY MODAL
-// ════════════════════════════════════════════════════════
-function openPriorityModal(jobId) {
+function openPriorityModal(jobId){
   S.pendingPriorityJobId = jobId;
-  const job = S.jobs.find(j=>j.id===jobId);
-  const currentStatus = job?.status||'Need';
-  const options = ['Need','Low','Medium','High','Immediate','Done'];
-  const colors = { Need:'#666', Low:'#7a5c00', Medium:'#c47a00', High:'#c45000', Immediate:'#c62828', Done:'#2e7d32' };
-  const container = document.getElementById('priorityModalBtns');
-  container.innerHTML = options.map(o => `
-    <button onclick="setPriorityFromModal('${o}')" style="
-      padding:11px 14px;border-radius:10px;border:1px solid #e0e0e0;background:${o===currentStatus?'var(--blue-bg)':'#f5f5f5'};
-      color:${colors[o]||'#111'};font-family:'DM Sans',sans-serif;font-size:14px;font-weight:${o===currentStatus?'700':'500'};
-      cursor:pointer;text-align:left;transition:all .12s;
-    ">${o}${o===currentStatus?' ✓':''}</button>`).join('');
+  var job = S.jobs.find(function(j){ return j.id===jobId; });
+  var cur = job ? (job.status||'Need') : 'Need';
+  var options = ['Need','Low','Medium','High','Immediate','Done'];
+  var container = document.getElementById('priorityModalBtns');
+  container.innerHTML = '';
+  options.forEach(function(o){
+    var btn = document.createElement('button');
+    btn.style.cssText = 'padding:11px 14px;border-radius:10px;border:1px solid '+(o===cur?'var(--blue)':'#e0e0e0')+';background:'+(o===cur?'var(--blue-bg)':'#f5f5f5')+';color:'+(P_COLOR[o]||'#111')+';font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:'+(o===cur?'700':'500')+';cursor:pointer;text-align:left;width:100%';
+    btn.textContent = o + (o===cur?' \u2713':'');
+    btn.onclick = function(){ setPriorityFromModal(o); };
+    container.appendChild(btn);
+  });
   openModal('priorityModal');
 }
-async function setPriorityFromModal(newStatus) {
-  const id = S.pendingPriorityJobId;
-  const job = S.jobs.find(j=>j.id===id);
-  if (!job) return closeModal('priorityModal');
-  const oldStatus = job.status||'Open';
-  if (oldStatus === 'Done' && newStatus !== 'Done') {
-    if (!confirm('This will re-open the work order. Are you sure?')) return closeModal('priorityModal');
+function setPriorityFromModal(newStatus){
+  var id = S.pendingPriorityJobId;
+  var job = S.jobs.find(function(j){ return j.id===id; });
+  if(!job){ closeModal('priorityModal'); return; }
+  if(job.status==='Done' && newStatus!=='Done'){
+    if(!confirm('This will re-open the work order. Are you sure?')){ closeModal('priorityModal'); return; }
   }
   job.status = newStatus;
-  if (newStatus === 'Done') job.completedAt = new Date().toISOString();
-  // Recalculate due date based on new priority
-  if (PRIORITY_DAYS[newStatus] !== undefined) job.due = priorityToDate(newStatus);
+  if(newStatus==='Done') job.completedAt = new Date().toISOString();
+  if(PRIORITY_DAYS[newStatus]!==undefined) job.due = priorityToDate(newStatus);
   closeModal('priorityModal');
-  try { await apiCall({ action:'updateJob', id, fields:{ status:newStatus, due:job.due||'', completedAt:job.completedAt||'' }}); } catch(e){}
-  if (S.role==='vendor') { renderVendorJobs(false); renderVendorJobs(true); }
-  else renderAllJobs();
-  if (document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(id);
+  apiCall({action:'updateJob',id:id,fields:{status:newStatus,due:job.due||'',completedAt:job.completedAt||''}}).catch(function(){});
+  if(S.role==='vendor'){ renderVendorJobs(false); renderVendorJobs(true); } else renderAllJobs();
+  if(document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(id);
 }
 
-// ════════════════════════════════════════════════════════
-// RENDER: ALL JOBS
-// ════════════════════════════════════════════════════════
-function renderAllJobs() {
-  const sf = document.getElementById('fStatus').value;
-  const vf = document.getElementById('fVendor').value;
-  const pf = document.getElementById('fProperty').value;
-  let jobs = S.jobs.filter(j =>
-    (!sf || (j.status||'Need')===sf) &&
-    (!vf || j.assignTo===vf) &&
-    (!pf || j.property===pf)
-  ).sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));
-  const list = document.getElementById('allJobsList');
-  if (!jobs.length) { list.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No jobs match</div></div>'; return; }
-  list.innerHTML = jobs.map(j=>jobCardHTML(j,true)).join('');
+// EST HOURS MODAL
+function openEstHoursModal(jobId){
+  S.pendingEstJobId = jobId;
+  var job = S.jobs.find(function(j){ return j.id===jobId; });
+  renderEstHoursModal(job ? (job.estHours||'') : '');
+  openModal('estHoursModal');
 }
-
-// ════════════════════════════════════════════════════════
-// RENDER: VENDOR JOBS
-// ════════════════════════════════════════════════════════
-function renderVendorJobs(done) {
-  const mine = S.jobs.filter(j=>j.assignTo===S.vendorName);
-  const jobs = done ? mine.filter(j=>j.status==='Done') : mine.filter(j=>j.status!=='Done');
-  const listId = done ? 'vendDoneList' : 'vendActiveList';
-  const list = document.getElementById(listId);
-  if (!jobs.length) { list.innerHTML=`<div class="empty-state"><div class="empty-icon">${done?'✅':'📭'}</div><div class="empty-text">${done?'No completed jobs':'No active jobs'}</div></div>`; return; }
-  list.innerHTML = jobs.map(j=>jobCardHTML(j,false)).join('');
+function openEstHoursForm(){
+  S.pendingEstJobId = '__form__';
+  renderEstHoursModal(document.getElementById('dEstHours').value||'');
+  openModal('estHoursModal');
 }
-
-// ════════════════════════════════════════════════════════
-// RENDER: SUMMARY
-// ════════════════════════════════════════════════════════
-function renderSummary() {
-  const now = new Date();
-  const d30 = new Date(now-30*864e5);
-  // By Priority
-  const priorities = ['Immediate','High','Medium','Low','Done','Open'];
-  const pColors = { Immediate:'#7b1fa2', High:'#c62828', Medium:'#e65100', Low:'#2e7d32', Done:'var(--blue)', Open:'#888' };
-  document.getElementById('prioritySummary').innerHTML = priorities.map(p => {
-    const count = S.jobs.filter(j=>(j.status||'Need')===p).length;
-    return `<div class="stat-card"><div class="stat-num" style="color:${pColors[p]}">${count}</div><div class="stat-label">${p}</div></div>`;
-  }).join('');
-  // By Property
-  const propCounts = {};
-  S.jobs.forEach(j => { const k=j.property||'Unknown'; propCounts[k]=(propCounts[k]||0)+1; });
-  document.getElementById('propertySummary').innerHTML = Object.entries(propCounts).sort((a,b)=>b[1]-a[1]).map(([name,total]) => {
-    const open = S.jobs.filter(j=>j.property===name && j.status!=='Done').length;
-    const done = S.jobs.filter(j=>j.property===name && j.status==='Done' && new Date(j.completedAt||0)>=d30).length;
-    return `<div class="summary-card">
-      <div class="sc-name">${esc(name)}</div>
-      <div class="sc-stats">
-        <div class="sc-stat"><div class="sc-num">${total}</div><div class="sc-lbl">Total</div></div>
-        <div class="sc-stat"><div class="sc-num">${open}</div><div class="sc-lbl">Open</div></div>
-        <div class="sc-stat"><div class="sc-num">${done}</div><div class="sc-lbl">Done 30d</div></div>
-      </div>
-    </div>`;
-  }).join('');
-  // By Vendor
-  document.getElementById('vendorSummary').innerHTML = S.vendors.map(v => {
-    const vJobs = S.jobs.filter(j=>j.assignTo===v.name);
-    const vOpen = vJobs.filter(j=>j.status!=='Done').length;
-    const vDone = vJobs.filter(j=>j.status==='Done' && new Date(j.completedAt||0)>=d30).length;
-    return `<div class="summary-card">
-      <div class="sc-name">${esc(v.name)}</div>
-      <div class="sc-sub">${esc(v.primaryProf||v.title||'')}${v.grade?' · '+v.grade:''}${v.rate?' · $'+v.rate+'/hr':''}</div>
-      <div class="sc-stats">
-        <div class="sc-stat"><div class="sc-num">${vJobs.length}</div><div class="sc-lbl">Total</div></div>
-        <div class="sc-stat"><div class="sc-num">${vOpen}</div><div class="sc-lbl">Open</div></div>
-        <div class="sc-stat"><div class="sc-num">${vDone}</div><div class="sc-lbl">Done 30d</div></div>
-      </div>
-    </div>`;
-  }).join('');
+function renderEstHoursModal(current){
+  var container = document.getElementById('estHoursBtns');
+  var leftDiv = document.createElement('div');
+  leftDiv.style.cssText = 'display:flex;flex-direction:column;gap:6px';
+  var leftLabel = document.createElement('div');
+  leftLabel.style.cssText = 'font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-family:\'DM Mono\',monospace;margin-bottom:2px';
+  leftLabel.textContent = 'Hours';
+  leftDiv.appendChild(leftLabel);
+  EST_HOURS_LEFT.forEach(function(o){
+    var btn = document.createElement('button');
+    btn.style.cssText = 'padding:9px 8px;border-radius:8px;border:1px solid '+(o===current?'var(--blue)':'#e0e0e0')+';background:'+(o===current?'var(--blue-bg)':'#f5f5f5')+';color:'+(o===current?'var(--blue)':'#111')+';font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:'+(o===current?'700':'400')+';cursor:pointer;text-align:center;width:100%';
+    btn.textContent = o;
+    btn.onclick = function(){ setEstHours(o); };
+    leftDiv.appendChild(btn);
+  });
+  var rightDiv = document.createElement('div');
+  rightDiv.style.cssText = 'display:flex;flex-direction:column;gap:6px';
+  var rightLabel = document.createElement('div');
+  rightLabel.style.cssText = 'font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-family:\'DM Mono\',monospace;margin-bottom:2px';
+  rightLabel.textContent = 'Days';
+  rightDiv.appendChild(rightLabel);
+  EST_HOURS_RIGHT.forEach(function(o){
+    var btn = document.createElement('button');
+    btn.style.cssText = 'padding:9px 8px;border-radius:8px;border:1px solid '+(o===current?'var(--blue)':'#e0e0e0')+';background:'+(o===current?'var(--blue-bg)':'#f5f5f5')+';color:'+(o===current?'var(--blue)':'#111')+';font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:'+(o===current?'700':'400')+';cursor:pointer;text-align:center;width:100%';
+    btn.textContent = o;
+    btn.onclick = function(){ setEstHours(o); };
+    rightDiv.appendChild(btn);
+  });
+  container.innerHTML = '';
+  container.appendChild(leftDiv);
+  container.appendChild(rightDiv);
 }
-
-// ════════════════════════════════════════════════════════
-// ASSIGN JOB
-// ════════════════════════════════════════════════════════
-async function assignJob(id, vendorName) {
-  const job = S.jobs.find(j=>j.id===id); if (!job) return;
-  job.assignTo = vendorName;
-  if (!['Done','Low','Medium','High','Immediate'].includes(job.status)) job.status = vendorName ? 'Assigned' : 'Open';
-  try { await apiCall({ action:'updateJob', id, fields:{ assignTo:vendorName, status:job.status, due:job.due||'' }}); } catch(e){}
-  renderAllJobs();
-}
-
-// ════════════════════════════════════════════════════════
-// SUBMIT JOB
-// ════════════════════════════════════════════════════════
-async function submitJob() {
-  const prop = document.getElementById('dProperty').value;
-  const loc  = document.getElementById('dLocation').value.trim();
-  const cat  = document.getElementById('dCategory').value.trim();
-  const note = document.getElementById('dNote').value.trim();
-  const due  = document.getElementById('dDue').value;
-  const pri  = document.getElementById('dPriority').value;
-  const assign = document.getElementById('dAssign').value;
-  const estHours = document.getElementById('dEstHours').value;
-  if (!prop) return alert('Property is required.');
-  if (!loc)  return alert('Location is required — tap 📍 Get.');
-  if (!cat)  return alert('Job Type is required.');
-  const url = getUrl();
-  if (!url) { showToast('submitToast','submitToastSpacer','failed','⚠ No Sheets URL in Settings'); return; }
-  showToast('submitToast','submitToastSpacer','sending','Saving…');
-  let photoUrl = '';
-  if (S.photoFileD) {
-    try {
-      const b64 = await fileToBase64(S.photoFileD);
-      const r = await apiCall({ action:'uploadPhoto', unit:prop, category:cat, filename:`${prop}_${cat}_${Date.now()}.jpg`, mimeType:S.photoFileD.type||'image/jpeg', base64:b64 });
-      if (r.success) photoUrl = r.viewUrl;
-    } catch(e){}
+function setEstHours(val){
+  var id = S.pendingEstJobId;
+  if(id==='__form__'){
+    document.getElementById('dEstHours').value = val;
+    var btn = document.getElementById('dEstHoursBtn');
+    if(btn){ btn.textContent=val; btn.style.color='#111'; }
+    closeModal('estHoursModal'); return;
   }
-  try {
-    const r = await apiCall({ action:'submitJob', job:{
-      property:prop, location:loc, category:cat, note, due, priority:pri,
-      assignTo:assign, estHours, photoUrl, submittedBy:S.userName,
-      status: assign ? 'Assigned' : (pri||'Need'),
-      date: new Date().toLocaleDateString(), submittedAt: new Date().toISOString(),
+  var job = S.jobs.find(function(j){ return j.id===id; });
+  if(!job){ closeModal('estHoursModal'); return; }
+  job.estHours = val;
+  closeModal('estHoursModal');
+  apiCall({action:'updateJob',id:id,fields:{estHours:val}}).catch(function(){});
+  if(S.role==='vendor'){ renderVendorJobs(false); renderVendorJobs(true); } else renderAllJobs();
+  if(document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(id);
+}
+
+// ASSIGN JOB
+function assignJob(id, vendorName){
+  var job = S.jobs.find(function(j){ return j.id===id; }); if(!job) return;
+  job.assignTo = vendorName;
+  if(['Done','Low','Medium','High','Immediate','Need'].indexOf(job.status)<0 || !job.status) job.status = vendorName?'Assigned':'Need';
+  apiCall({action:'updateJob',id:id,fields:{assignTo:vendorName,status:job.status,due:job.due||''}}).catch(function(){});
+  renderAllJobs();
+  if(document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(id);
+}
+
+// SUBMIT JOB
+function submitJob(){
+  var prop    = document.getElementById('dProperty').value;
+  var loc     = document.getElementById('dLocation').value.trim();
+  var cat     = document.getElementById('dCategory').value;
+  var note    = document.getElementById('dNote').value.trim();
+  var due     = document.getElementById('dDue').value;
+  var pri     = document.getElementById('dPriority').value;
+  var assign  = document.getElementById('dAssign').value;
+  var estH    = document.getElementById('dEstHours').value;
+  if(!prop) return alert('Property is required.');
+  if(!loc)  return alert('Location is required.');
+  if(!cat)  return alert('Job Type is required.');
+  var url = getUrl();
+  if(!url){ showToast('submitToast','submitToastSpacer','failed','No Sheets URL &#8212; go to Settings'); return; }
+  showToast('submitToast','submitToastSpacer','sending','Saving&#8230;');
+  var doUpload = S.photoFileD
+    ? fileToBase64(S.photoFileD).then(function(b64){
+        return apiCall({action:'uploadPhoto',unit:prop,category:cat,filename:prop+'_'+cat+'_'+Date.now()+'.jpg',mimeType:S.photoFileD.type||'image/jpeg',base64:b64});
+      }).then(function(r){ return r.success?r.viewUrl:''; }).catch(function(){ return ''; })
+    : Promise.resolve('');
+  doUpload.then(function(photoUrl){
+    return apiCall({action:'submitJob',job:{
+      property:prop,location:loc,category:cat,note:note,due:due,priority:pri,
+      assignTo:assign,estHours:estH,userPhotoUrl:photoUrl,submittedBy:S.userName,
+      status:assign?'Assigned':(pri||'Need'),
+      date:new Date().toLocaleDateString(),submittedAt:new Date().toISOString()
     }});
-    if (!r.success) throw new Error(r.error);
-    showToast('submitToast','submitToastSpacer','sent','✓ Work order submitted');
-    S.jobs.unshift({ ...r.job, id:r.job.id||Date.now().toString() });
-    setTimeout(() => {
-      ['dProperty','dNote','dDue'].forEach(id=>document.getElementById(id).value='');
+  }).then(function(r){
+    if(!r.success) throw new Error(r.error);
+    showToast('submitToast','submitToastSpacer','sent','&#10003; Work order submitted');
+    S.jobs.unshift(r.job);
+    setTimeout(function(){
+      ['dProperty','dNote','dDue'].forEach(function(id){ document.getElementById(id).value=''; });
       document.getElementById('dCategory').value='';
       document.getElementById('dPriority').value='';
       document.getElementById('dAssign').value='';
       document.getElementById('dEstHours').value='';
-      const estBtn = document.getElementById('dEstHoursBtn'); if(estBtn){estBtn.textContent='— Select —';estBtn.style.color='#bbb';}
+      var eb=document.getElementById('dEstHoursBtn'); if(eb){eb.textContent='&#8212; Select &#8212;';eb.style.color='#bbb';}
       document.getElementById('dLocation').value='';
       resetPhotoD(); hideToast('submitToast','submitToastSpacer');
-      renderAllJobs();
-      showScreen('screen-dispatcher');
+      renderAllJobs(); showScreen('screen-dispatcher');
     }, 1200);
-  } catch(e) { showToast('submitToast','submitToastSpacer','failed','✗ Failed — check connection'); }
+  }).catch(function(e){ showToast('submitToast','submitToastSpacer','failed','Failed: '+e.message); });
 }
 
-// ════════════════════════════════════════════════════════
 // LOCATION
-// ════════════════════════════════════════════════════════
-function triggerLocationFlow() { openModal('locationModal'); }
-function triggerAddressClick() { openModal('locationModal'); }
-function closeModal(id, e) { if (!e || e.target.id===id) document.getElementById(id).style.display='none'; }
-function openModal(id) { document.getElementById(id).style.display='flex'; }
-function useGpsLocation() {
-  closeModal('locationModal');
-  const inp = document.getElementById('dLocation');
-  inp.value = 'Getting location…'; inp.readOnly = true; inp.placeholder = 'Address';
-  getGpsLocation().then(addr => { inp.value = addr||'Location unavailable'; inp.readOnly = false; });
+function triggerLocationFlow(){ openModal('locationModal'); }
+function triggerAddressClick(){
+  var inp = document.getElementById('dLocation');
+  if(!inp.value) openModal('locationModal');
 }
-function useRemoteLocation() {
+function useGpsLocation(){
   closeModal('locationModal');
-  const inp = document.getElementById('dLocation');
-  inp.value = '';
-  inp.readOnly = false;
-  inp.placeholder = 'Enter address manually';
-  inp.focus();
+  var inp = document.getElementById('dLocation');
+  inp.value = 'Getting location\u2026'; inp.readOnly = true;
+  getGpsLocation().then(function(addr){ inp.value=addr||'Location unavailable'; inp.readOnly=false; });
 }
-function getGpsLocation() {
-  return new Promise(resolve => {
-    if (!navigator.geolocation) { resolve(''); return; }
-    navigator.geolocation.getCurrentPosition(async pos => {
-      try {
-        const {latitude:lat,longitude:lon} = pos.coords;
-        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,{headers:{'Accept-Language':'en'}});
-        const data = await r.json(); const a = data.address||{};
-        resolve([(a.house_number?a.house_number+' ':'')+a.road,a.city||a.town||a.village||'',a.state||''].filter(Boolean).join(', '));
-      } catch(e){ resolve(''); }
-    }, ()=>resolve(''), {timeout:8000,maximumAge:30000});
+function useRemoteLocation(){
+  closeModal('locationModal');
+  var inp = document.getElementById('dLocation');
+  inp.value = ''; inp.readOnly = false; inp.placeholder = 'Enter address manually'; inp.focus();
+}
+function getGpsLocation(){
+  return new Promise(function(resolve){
+    if(!navigator.geolocation){ resolve(''); return; }
+    navigator.geolocation.getCurrentPosition(function(pos){
+      fetch('https://nominatim.openstreetmap.org/reverse?lat='+pos.coords.latitude+'&lon='+pos.coords.longitude+'&format=json',{headers:{'Accept-Language':'en'}})
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          var a=data.address||{};
+          resolve([(a.house_number?a.house_number+' ':'')+a.road,a.city||a.town||a.village||'',a.state||''].filter(Boolean).join(', '));
+        }).catch(function(){ resolve(''); });
+    }, function(){ resolve(''); }, {timeout:8000,maximumAge:30000});
   });
 }
 
-// ════════════════════════════════════════════════════════
 // ADD PROPERTY
-// ════════════════════════════════════════════════════════
-function confirmAddProperty() {
-  const val = document.getElementById('newPropInput').value.trim();
-  if (!val) return;
-  S.properties.push(val);
-  populatePropertyDropdown();
+function confirmAddProperty(){
+  var val = document.getElementById('newPropInput').value.trim(); if(!val) return;
+  S.properties.push(val); populatePropertyDropdown();
   document.getElementById('dProperty').value = val;
   document.getElementById('newPropInput').value = '';
   closeModal('addPropModal');
-  // Save to sheet in background
-  try { apiCall({ action:'addProperty', name:val }); } catch(e){}
+  apiCall({action:'addProperty',name:val}).catch(function(){});
 }
 
-// ════════════════════════════════════════════════════════
 // PHOTO
-// ════════════════════════════════════════════════════════
-function handlePhotoD(input) {
-  const file = input.files[0]; if (!file) return;
+function handlePhotoD(input){
+  var file=input.files[0]; if(!file) return;
   S.photoFileD = file;
-  const url = URL.createObjectURL(file);
-  document.getElementById('photoZoneD').innerHTML = `<img src="${url}"><div class="overlay"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>`;
+  var url = URL.createObjectURL(file);
+  document.getElementById('photoZoneD').innerHTML = '<img src="'+url+'"><div class="overlay"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
 }
-function resetPhotoD() {
+function resetPhotoD(){
   S.photoFileD = null;
   document.getElementById('photoFileD').value='';
-  document.getElementById('photoZoneD').innerHTML = `<svg class="cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><p>Tap to attach photo</p>`;
+  document.getElementById('photoZoneD').innerHTML = '<svg class="cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><p>Tap to attach photo</p>';
+}
+function triggerUserPhotoUpload(jobId){ S.pendingPhotoJobId=jobId; var inp=document.getElementById('userPhotoUpload'); inp.value=''; inp.click(); }
+function triggerVendorPhotoUpload(jobId){ S.pendingPhotoJobId=jobId; var inp=document.getElementById('vendorPhotoUpload'); inp.value=''; inp.click(); }
+function handleUserPhotoUpload(input){ var file=input.files[0]; if(file) uploadJobPhoto(S.pendingPhotoJobId,file,'user'); }
+function handleVendorPhotoUpload(input){ var file=input.files[0]; if(file) uploadJobPhoto(S.pendingPhotoJobId,file,'vendor'); }
+function uploadJobPhoto(jobId, file, type){
+  var job=S.jobs.find(function(j){ return j.id===jobId; }); if(!job) return;
+  var card=document.getElementById('card-'+jobId);
+  var pills=card?card.querySelectorAll('.jc-photo-pill'):[];
+  var targetPill = type==='user'?pills[0]:pills[1];
+  if(targetPill){ targetPill.textContent='Uploading\u2026'; targetPill.disabled=true; }
+  fileToBase64(file).then(function(b64){
+    return apiCall({action:'uploadPhoto',unit:job.property||'unknown',category:type==='vendor'?'vendor-completion':'work-order',filename:(job.property||'job')+'_'+type+'_'+Date.now()+'.jpg',mimeType:file.type||'image/jpeg',base64:b64});
+  }).then(function(r){
+    if(!r.success) throw new Error(r.error);
+    var field = type==='vendor'?'vendorPhotoUrl':'userPhotoUrl';
+    job[field] = r.viewUrl;
+    return apiCall({action:'updateJob',id:jobId,fields:{[field]:r.viewUrl}});
+  }).then(function(){
+    if(S.role==='vendor'){ renderVendorJobs(false); renderVendorJobs(true); } else renderAllJobs();
+    if(document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(jobId);
+  }).catch(function(e){
+    if(targetPill){ targetPill.textContent='Failed'; targetPill.disabled=false; }
+  });
 }
 
-// ════════════════════════════════════════════════════════
+// FULLSCREEN
+function openFullscreen(url, title){
+  var el=document.createElement('div'); el.className='fs-overlay';
+  el.innerHTML='<img class="fs-img" src="'+esc(url)+'" alt="'+(title||'Photo')+'">';
+  el.onclick=function(){ el.remove(); };
+  document.body.appendChild(el);
+}
+
+// MODAL HELPERS
+function openModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id, e){ if(!e||e.target.id===id) document.getElementById(id).style.display='none'; }
+
 // SETTINGS
-// ════════════════════════════════════════════════════════
-function updateStatus(u) {
-  const dot=document.getElementById('statusDot'), txt=document.getElementById('statusText');
-  dot.className = u?'status-dot connected':'status-dot';
-  txt.textContent = u?'URL saved — ready':'No URL saved';
-  if (u) document.getElementById('sheetsUrlInput').value=u;
+function updateStatus(u){
+  var dot=document.getElementById('statusDot'),txt=document.getElementById('statusText');
+  dot.className=u?'status-dot connected':'status-dot';
+  txt.textContent=u?'URL saved \u2014 ready':'No URL saved';
+  if(u) document.getElementById('sheetsUrlInput').value=u;
 }
-function saveSheetUrl() {
-  const u=document.getElementById('sheetsUrlInput').value.trim();
-  if (!u) return alert('Paste a URL first.');
-  if (!u.startsWith('https://script.google.com')) return alert('Doesn\'t look like a Google Apps Script URL.');
-  setUrl(u); updateStatus(u); alert('✓ URL saved!');
+function saveSheetUrl(){
+  var u=document.getElementById('sheetsUrlInput').value.trim();
+  if(!u) return alert('Paste a URL first.');
+  if(u.indexOf('script.google.com')<0) return alert('Does not look like a Google Apps Script URL.');
+  setUrl(u); updateStatus(u); alert('URL saved!');
 }
-async function testConnection() {
-  const u=getUrl(); if(!u) return alert('No URL saved.');
-  const btn=event.target; btn.textContent='Testing…'; btn.disabled=true;
-  try { const r=await apiCall({action:'test'}); if(r.success){document.getElementById('statusDot').className='status-dot connected';alert('✓ Connected!');}else throw new Error(r.error); }
-  catch(e){document.getElementById('statusDot').className='status-dot error';alert('Failed: '+e.message);}
-  btn.textContent='Test Connection'; btn.disabled=false;
+function testConnection(){
+  var u=getUrl(); if(!u) return alert('No URL saved.');
+  var btn=event.target; btn.textContent='Testing\u2026'; btn.disabled=true;
+  apiCall({action:'test'}).then(function(r){
+    if(r.success){ document.getElementById('statusDot').className='status-dot connected'; alert('Connected!'); }
+    else throw new Error(r.error);
+  }).catch(function(e){ document.getElementById('statusDot').className='status-dot error'; alert('Failed: '+e.message); })
+  .then(function(){ btn.textContent='Test Connection'; btn.disabled=false; });
 }
 
-// ════════════════════════════════════════════════════════
 // TOAST / LOADING
-// ════════════════════════════════════════════════════════
-function showToast(id,spacerId,type,msg) {
-  const t=document.getElementById(id),s=document.getElementById(spacerId);
-  t.className=`toast ${type}`; t.innerHTML=(type==='sending'?'<div class="spinner"></div>':'')+msg;
+function showToast(id,spacerId,type,msg){
+  var t=document.getElementById(id),s=document.getElementById(spacerId);
+  t.className='toast '+type; t.innerHTML=(type==='sending'?'<div class="spinner"></div>':'')+msg;
   if(s) s.style.height='8px';
 }
-function hideToast(id,spacerId) {
-  const t=document.getElementById(id),s=document.getElementById(spacerId);
-  t.className=''; t.innerHTML=''; if(s) s.style.height='0';
-}
-function showLoading() { const d=document.createElement('div');d.className='loading-overlay';d.id='loadingOverlay';d.innerHTML='<div class="loading-spinner"></div>';document.body.appendChild(d); }
-function hideLoading() { document.getElementById('loadingOverlay')?.remove(); }
+function hideToast(id,spacerId){ var t=document.getElementById(id),s=document.getElementById(spacerId); t.className=''; t.innerHTML=''; if(s) s.style.height='0'; }
+function showLoading(){ var d=document.createElement('div'); d.className='loading-overlay'; d.id='loadingOverlay'; d.innerHTML='<div class="loading-spinner"></div>'; document.body.appendChild(d); }
+function hideLoading(){ var d=document.getElementById('loadingOverlay'); if(d) d.remove(); }
 
-// ════════════════════════════════════════════════════════
 // UTILS
-// ════════════════════════════════════════════════════════
-function fileToBase64(f) { return new Promise((res,rej)=>{ const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=()=>rej(new Error('Read failed'));r.readAsDataURL(f); }); }
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fileToBase64(f){ return new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(){ res(r.result.split(',')[1]); }; r.onerror=function(){ rej(new Error('Read failed')); }; r.readAsDataURL(f); }); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// ════════════════════════════════════════════════════════
 // DEMO DATA
-// ════════════════════════════════════════════════════════
-function getDemoPeople() {
+function getDemoPeople(){
   return [
-    {name:'Jeff Budish',role:'user',email:'jeff@example.com'},
-    {name:'Ted Bickel',role:'user',email:'ted@example.com'},
-    {name:'Mack Braun',role:'user',email:'mack@example.com'},
-    {name:'Dylan Steman',role:'user',email:'dylan@example.com'},
-    {name:'Tom Reid',role:'vendor',primaryProf:'Electrician',grade:'A+',rate:'90'},
-    {name:'John Smith',role:'vendor',primaryProf:'Plumber',grade:'A',rate:'75'},
-    {name:'Maria Lopez',role:'vendor',primaryProf:'Landscaping',grade:'A-',rate:'55'},
-    {name:'Derek Chu',role:'vendor',primaryProf:'Snow Removal',grade:'B+',rate:'65'},
-    {name:'Sara Okonkwo',role:'vendor',primaryProf:'Maintenance/Handyman/Turns',grade:'B',rate:'45'},
-    {name:'Joel Friese',role:'admin',email:'joel@example.com'},
-    {name:'Derek Day',role:'admin',email:'derek@example.com'},
+    {name:'Jeff Budish',role:'user',email:''},{name:'Ted Bickel',role:'user',email:''},{name:'Mack Braun',role:'user',email:''},{name:'Dylan Steman',role:'user',email:''},
+    {name:'Tom Reid',role:'vendor',primaryProf:'Electrician',grade:'A+',rate:'90'},{name:'John Smith',role:'vendor',primaryProf:'Plumber',grade:'A',rate:'75'},{name:'Maria Lopez',role:'vendor',primaryProf:'Landscaping',grade:'A-',rate:'55'},{name:'Derek Chu',role:'vendor',primaryProf:'Snow Removal',grade:'B+',rate:'65'},{name:'Sara Okonkwo',role:'vendor',primaryProf:'Maintenance/Handyman/Turns',grade:'B',rate:'45'},
+    {name:'Joel Friese',role:'admin',email:''},{name:'Derek Day',role:'admin',email:''},
   ];
 }
-function getDemoVendors() {
-  return getDemoPeople().filter(p=>p.role==='vendor');
-}
-function getDemoProperties() {
-  return ['123 Maple St','456 Oak Ave','789 Birch Rd','321 Elm Dr','555 Pine Blvd'];
-}
-function getDemoJobs() {
-  const fmt = n => { const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10); };
-  const iso = n => { const d=new Date();d.setDate(d.getDate()+n);return d.toISOString(); };
+function getDemoVendors(){ return getDemoPeople().filter(function(p){ return p.role==='vendor'; }); }
+function getDemoProperties(){ return ['123 Maple St','456 Oak Ave','789 Birch Rd','321 Elm Dr','555 Pine Blvd']; }
+function getDemoJobs(){
+  var now=new Date();
+  function fmt(n){ var d=new Date(now); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+  function iso(n){ var d=new Date(now); d.setDate(d.getDate()+n); return d.toISOString(); }
   return [
-    {id:'1',property:'123 Maple St',category:'Lawn Mowing',note:'Backyard overgrown',assignTo:'Maria Lopez',status:'Medium',due:fmt(5),date:fmt(-2),submittedAt:iso(-2),estHours:'3 hrs',location:'123 Maple St, Minneapolis MN'},
-    {id:'2',property:'456 Oak Ave',category:'Snow Removal',note:'Driveway + walkway',assignTo:'Derek Chu',status:'Done',due:fmt(-5),date:fmt(-10),submittedAt:iso(-10),completedAt:iso(-5),location:'456 Oak Ave, Minneapolis MN'},
-    {id:'3',property:'789 Birch Rd',category:'Electrical',note:'Panel inspection',assignTo:'Tom Reid',status:'High',due:fmt(2),date:fmt(-1),submittedAt:iso(-1),estHours:'4 hrs',location:'789 Birch Rd, Minneapolis MN'},
-    {id:'4',property:'321 Elm Dr',category:'Plumbing',note:'Leaking pipe',assignTo:'John Smith',status:'Immediate',due:fmt(0),date:fmt(-1),submittedAt:iso(-1),location:'321 Elm Dr, Minneapolis MN'},
-    {id:'5',property:'555 Pine Blvd',category:'Yard Cleanup',note:'Fall leaves',assignTo:'',status:'Need',due:fmt(14),date:fmt(0),submittedAt:iso(0),location:'555 Pine Blvd, Minneapolis MN'},
-    {id:'6',property:'123 Maple St',category:'Repairs',note:'Fence damage',assignTo:'Sara Okonkwo',status:'Low',due:fmt(25),date:fmt(-3),submittedAt:iso(-3),location:'123 Maple St, Minneapolis MN'},
+    {id:'1',property:'123 Maple St',category:'Lawn Mowing',note:'Backyard overgrown',assignTo:'Maria Lopez',status:'Medium',due:fmt(5),date:fmt(-2),submittedAt:iso(-2),estHours:'3 hrs',location:'123 Maple St, Minneapolis MN',userPhotoUrl:'',vendorPhotoUrl:'',submittedBy:'Jeff Budish'},
+    {id:'2',property:'456 Oak Ave',category:'Snow Removal',note:'Driveway + walkway',assignTo:'Derek Chu',status:'Done',due:fmt(-5),date:fmt(-10),submittedAt:iso(-10),completedAt:iso(-5),location:'456 Oak Ave, Minneapolis MN',userPhotoUrl:'',vendorPhotoUrl:'',submittedBy:'Ted Bickel'},
+    {id:'3',property:'789 Birch Rd',category:'Electrical',note:'Panel inspection',assignTo:'Tom Reid',status:'High',due:fmt(2),date:fmt(-1),submittedAt:iso(-1),estHours:'4 hrs',location:'789 Birch Rd, Minneapolis MN',userPhotoUrl:'',vendorPhotoUrl:'',submittedBy:'Mack Braun'},
+    {id:'4',property:'321 Elm Dr',category:'Plumbing',note:'Leaking pipe',assignTo:'John Smith',status:'Immediate',due:fmt(0),date:fmt(-1),submittedAt:iso(-1),location:'321 Elm Dr, Minneapolis MN',userPhotoUrl:'',vendorPhotoUrl:'',submittedBy:'Dylan Steman'},
+    {id:'5',property:'555 Pine Blvd',category:'Yard Cleanup',note:'Fall leaves',assignTo:'',status:'Need',due:fmt(14),date:fmt(0),submittedAt:iso(0),location:'555 Pine Blvd, Minneapolis MN',userPhotoUrl:'',vendorPhotoUrl:'',submittedBy:'Jeff Budish'},
+    {id:'6',property:'123 Maple St',category:'Repairs',note:'Fence damage',assignTo:'Sara Okonkwo',status:'Low',due:fmt(25),date:fmt(-3),submittedAt:iso(-3),location:'123 Maple St, Minneapolis MN',userPhotoUrl:'',vendorPhotoUrl:'',submittedBy:'Ted Bickel'},
   ];
 }
 
-// ════════════════════════════════════════════════════════
 // INIT
-// ════════════════════════════════════════════════════════
 updateStatus(getUrl());
-(async()=>{
-  S.people = getDemoPeople();
-  S.vendors = getDemoVendors();
-  S.properties = getDemoProperties();
-  S.jobs = getDemoJobs();
-  try {
-    const r = await apiCall({action:'getData'});
-    if (r.success) { S.jobs=r.jobs||S.jobs; S.vendors=r.vendors||S.vendors; S.properties=r.properties||S.properties; S.people=r.people||S.people; S.jobTypes=r.jobTypes||S.jobTypes; }
-  } catch(e){}
-  populateWelcomeDropdown();
-})();
+// Always load demo data first so the welcome dropdown works immediately
+S.people    = getDemoPeople();
+S.vendors   = getDemoVendors();
+S.properties= getDemoProperties();
+S.jobs      = getDemoJobs();
+populateWelcomeDropdown();
+// Then try to fetch live data in background
+apiCall({action:'getData'}).then(function(r){
+  if(r && r.success){
+    S.jobs       = r.jobs      || S.jobs;
+    S.vendors    = r.vendors   || S.vendors;
+    S.properties = r.properties|| S.properties;
+    S.people     = r.people    || S.people;
+    S.jobTypes   = r.jobTypes  || S.jobTypes;
+    populateWelcomeDropdown();
+  }
+}).catch(function(){});
 </script>
-<input type="file" id="userPhotoUpload"   accept="image/*" onchange="handleUserPhotoUpload(this)" style="position:fixed;top:-100px;left:-100px;opacity:0;width:1px;height:1px">
-<input type="file" id="vendorPhotoUpload" accept="image/*" onchange="handleVendorPhotoUpload(this)" style="position:fixed;top:-100px;left:-100px;opacity:0;width:1px;height:1px">
 </body>
 </html>
