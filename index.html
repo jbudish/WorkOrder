@@ -655,10 +655,7 @@ function populatePropertyDropdown(){
 function populateJobTypes(){
   var el = document.getElementById('dCategory'); if(!el) return;
   var types = S.jobTypes && S.jobTypes.length ? S.jobTypes : ['Electrical','Plumbing','Lawn Mowing','Snow Removal','Landscaping','Cleaning','Repairs','Painting','Flooring','Roofing','HVAC','General Maintenance'];
-  el.innerHTML = '<option value="">Job Type</option>'+types.map(function(t){ return '<option value="'+esc(t)+'">'+esc(t)+'</option>'; }).join('')+'<option value="__other">Other&#8230;</option>';
-  el.onchange = function(){
-    if(this.value==='__other'){ this.value='Other'; }
-  };
+  el.innerHTML = '<option value="">Job Type</option>'+types.map(function(t){ return '<option value="'+esc(t)+'">'+esc(t)+'</option>'; }).join('');
 }
 function vendorLabel(v){
   var parts = [v.name];
