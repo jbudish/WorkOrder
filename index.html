@@ -435,7 +435,7 @@ var S = {
 var PRIORITY_DAYS = {Low:30,Medium:7,High:2,Immediate:0};
 var EST_HOURS_LEFT  = ['1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
 var EST_HOURS_RIGHT = ['1 day','2 days','3 days','4 days','5 days','6 days','7 days','8+ days'];
-var EST_HOURS_ALL   = EST_HOURS_LEFT.concat(EST_HOURS_RIGHT);
+var EST_HOURS_ALL   = EST_HOURS_LEFT.concat(EST_HOURS_RIGHT).concat(['Need a Bid']);
 var PROFICIENCY_LIST = ['Boilers','Cleaning','Electrician','Flooring','Framing','Kitchen Install','Landscaping','Lawn Mowing','Leasing','Maintenance/Handyman/Turns','Paint','Plumber','Roofs','Sheetrock/Mud/Tape','Tile'];
 var PROF_UNITS = {'Leasing':'per lease','Kitchen Install':'per box','Flooring':'per SF'};
 var P_COLOR = {Need:'#666',Low:'#7a5c00',Medium:'#c47a00',High:'#c45000',Immediate:'#c62828',Done:'#2e7d32'};
@@ -963,9 +963,18 @@ function renderEstHoursModal(current){
     btn.onclick = function(){ setEstHours(o); };
     rightDiv.appendChild(btn);
   });
+  var bidBtn = document.createElement('button');
+  bidBtn.style.cssText = 'grid-column:1/-1;padding:11px 8px;border-radius:8px;border:1px solid '+(current==='Need a Bid'?'var(--blue)':'#bbb')+';background:'+(current==='Need a Bid'?'var(--blue-bg)':'#d0d0d0')+';color:'+(current==='Need a Bid'?'var(--blue)':'#444')+';font-family:'DM Sans',sans-serif;font-size:13px;font-weight:'+(current==='Need a Bid'?'700':'500')+';cursor:pointer;text-align:center;width:100%';
+  bidBtn.textContent = 'Need a Bid';
+  bidBtn.onclick = function(){ setEstHours('Need a Bid'); };
+
   container.innerHTML = '';
+  container.style.display = 'grid';
+  container.style.gridTemplateColumns = '1fr 1fr';
+  container.style.gap = '8px';
   container.appendChild(leftDiv);
   container.appendChild(rightDiv);
+  container.appendChild(bidBtn);
 }
 function setEstHours(val){
   var id = S.pendingEstJobId;
