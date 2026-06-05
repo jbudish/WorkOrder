@@ -964,7 +964,18 @@ function renderEstHoursModal(current){
     rightDiv.appendChild(btn);
   });
   var bidBtn = document.createElement('button');
-  bidBtn.style.cssText = 'grid-column:1/-1;padding:11px 8px;border-radius:8px;border:1px solid '+(current==='Need a Bid'?'var(--blue)':'#bbb')+';background:'+(current==='Need a Bid'?'var(--blue-bg)':'#d0d0d0')+';color:'+(current==='Need a Bid'?'var(--blue)':'#444')+';font-family:'DM Sans',sans-serif;font-size:13px;font-weight:'+(current==='Need a Bid'?'700':'500')+';cursor:pointer;text-align:center;width:100%';
+  bidBtn.style.fontFamily = 'DM Sans, sans-serif';
+  bidBtn.style.fontSize = '13px';
+  bidBtn.style.fontWeight = current==='Need a Bid' ? '700' : '500';
+  bidBtn.style.padding = '11px 8px';
+  bidBtn.style.borderRadius = '8px';
+  bidBtn.style.border = '1px solid ' + (current==='Need a Bid' ? 'var(--blue)' : '#bbb');
+  bidBtn.style.background = current==='Need a Bid' ? 'var(--blue-bg)' : '#d0d0d0';
+  bidBtn.style.color = current==='Need a Bid' ? 'var(--blue)' : '#444';
+  bidBtn.style.cursor = 'pointer';
+  bidBtn.style.textAlign = 'center';
+  bidBtn.style.width = '100%';
+  bidBtn.style.gridColumn = '1 / -1';
   bidBtn.textContent = 'Need a Bid';
   bidBtn.onclick = function(){ setEstHours('Need a Bid'); };
 
