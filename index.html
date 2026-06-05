@@ -79,7 +79,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .p-immediate{background:rgba(198,40,40,.08);border-color:rgba(180,30,30,.3);color:#c62828}
 .p-done{background:rgba(46,125,50,.08);border-color:rgba(46,125,50,.3);color:#2e7d32}
 .p-open{background:rgba(160,160,160,.1);border-color:rgba(120,120,120,.3);color:#666}
-.p-assigned{background:rgba(21,101,192,.05);border-color:rgba(21,101,192,.25);color:#1565c0}
 .assign-select{}
 /* Empty state */
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)}
@@ -439,8 +438,8 @@ var EST_HOURS_RIGHT = ['1 day','2 days','3 days','4 days','5 days','6 days','7 d
 var EST_HOURS_ALL   = EST_HOURS_LEFT.concat(EST_HOURS_RIGHT);
 var PROFICIENCY_LIST = ['Boilers','Cleaning','Electrician','Flooring','Framing','Kitchen Install','Landscaping','Lawn Mowing','Leasing','Maintenance/Handyman/Turns','Paint','Plumber','Roofs','Sheetrock/Mud/Tape','Tile'];
 var PROF_UNITS = {'Leasing':'per lease','Kitchen Install':'per box','Flooring':'per SF'};
-var P_COLOR = {Need:'#666',Low:'#7a5c00',Medium:'#c47a00',High:'#c45000',Immediate:'#c62828',Done:'#2e7d32',Open:'#666'};
-var P_BG    = {Need:'rgba(160,160,160,.1)',Low:'rgba(180,140,0,.08)',Medium:'rgba(255,180,80,.12)',High:'rgba(230,100,30,.1)',Immediate:'rgba(198,40,40,.08)',Done:'rgba(46,125,50,.08)',Open:'rgba(160,160,160,.1)'};
+var P_COLOR = {Need:'#666',Low:'#7a5c00',Medium:'#c47a00',High:'#c45000',Immediate:'#c62828',Done:'#2e7d32'};
+var P_BG    = {Need:'rgba(160,160,160,.1)',Low:'rgba(180,140,0,.08)',Medium:'rgba(255,180,80,.12)',High:'rgba(230,100,30,.1)',Immediate:'rgba(198,40,40,.08)',Done:'rgba(46,125,50,.08)'};
 
 // URL / API
 function getUrl(){ try{ return localStorage.getItem('woUrl')||''; }catch(e){ return ''; } }
@@ -703,7 +702,7 @@ function fmtDateTime(s){
   return mo+'/'+dy+'/'+yr+', '+h12+':'+m+ampm;
 }
 function priorityClass(p){
-  var map={Need:'p-need',Low:'p-low',Medium:'p-medium',High:'p-high',Immediate:'p-immediate',Done:'p-done',Open:'p-open',Assigned:'p-assigned'};
+  var map={Need:'p-need',Low:'p-low',Medium:'p-medium',High:'p-high',Immediate:'p-immediate',Done:'p-done',Open:'p-need'};
   return map[p]||'p-need';
 }
 
@@ -740,7 +739,7 @@ function jobCardHTML(j, showAssign){
       +'<div class="jc-left" id="jcl-'+esc(j.id)+'">'
         +'<div class="jc-title">'+esc(j.property||'No property')+'</div>'
         +(j.location ? '<div class="jc-row">'+esc(j.location)+'</div>' : '')
-        +'<div class="jc-row">'+(j.assignTo?'Assigned':'Unassigned')+' &#8212; '+fmtDateTime(j.submittedAt||j.date||'')+'</div>'
+        +'<div class="jc-row">'+esc(j.assignTo||'Unassigned')+' &#8212; '+fmtDateTime(j.submittedAt||j.date||'')+'</div>'
         +(j.due ? '<div class="jc-row">Due &#8212; '+fmtDate(j.due)+'</div>' : '')
         +'<div class="jc-row">'+esc(j.category||'&#8212;')+(j.note?' &#8212; '+esc(j.note):'')+'</div>'
       +'</div>'
@@ -833,7 +832,7 @@ function openJobDetail(jobId){
   var hLeft = '<div class="detail-header-left">'
     +'<div class="detail-title">'+esc(j.property||'No property')+'</div>'
     +(j.location ? '<div class="detail-location">'+esc(j.location)+'</div>' : '')
-    +'<div class="detail-row">'+(j.assignTo?'Assigned':'Unassigned')+' - '+fmtDateTime(j.submittedAt||j.date||'')+'</div>'
+    +'<div class="detail-row">'+esc(j.assignTo||'Unassigned')+' - '+fmtDateTime(j.submittedAt||j.date||'')+'</div>'
     +(j.due ? '<div class="detail-row">Due - '+fmtDate(j.due)+'</div>' : '')
     +'<div class="detail-row">'+esc(j.category||'-')+(j.note?' - '+esc(j.note):'')+'</div>'
     +'</div>';
@@ -989,7 +988,7 @@ function setEstHours(val){
 function assignJob(id, vendorName){
   var job = S.jobs.find(function(j){ return j.id===id; }); if(!job) return;
   job.assignTo = vendorName;
-  if(['Done','Low','Medium','High','Immediate','Need'].indexOf(job.status)<0 || !job.status) job.status = vendorName?'Assigned':'Need';
+  // status unchanged when assigning vendor
   apiCall({action:'updateJob',id:id,fields:{assignTo:vendorName,status:job.status,due:job.due||''}}).catch(function(){});
   renderAllJobs();
   if(document.getElementById('jobDetailBackdrop').style.display==='flex') openJobDetail(id);
@@ -1020,7 +1019,7 @@ function submitJob(){
     return apiCall({action:'submitJob',job:{
       property:prop,location:loc,category:cat,note:note,due:due,priority:pri,
       assignTo:assign,estHours:estH,userPhotoUrl:photoUrl,submittedBy:S.userName,
-      status:assign?'Assigned':(pri||'Need'),
+      status:(pri||'Need'),
       date:new Date().toLocaleDateString(),submittedAt:new Date().toISOString()
     }});
   }).then(function(r){
