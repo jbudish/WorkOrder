@@ -111,6 +111,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .grouped-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 36px 18px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;width:100%;outline:none;transition:border-color .15s;appearance:none;min-height:68px}
 .grouped-select:focus{border-color:var(--blue)}
 .grouped-select optgroup{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#aaa;font-style:normal}
+.grouped-select option{text-transform:none;font-size:14px;color:#111}
 .grouped-select option{font-size:14px;color:#111}
 /* Photo zone */
 .photo-zone{background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;position:relative;overflow:hidden;flex-shrink:0;height:120px;transition:border-color .2s}
@@ -656,11 +657,7 @@ function populateJobTypes(){
   var types = S.jobTypes && S.jobTypes.length ? S.jobTypes : ['Electrical','Plumbing','Lawn Mowing','Snow Removal','Landscaping','Cleaning','Repairs','Painting','Flooring','Roofing','HVAC','General Maintenance'];
   el.innerHTML = '<option value="">Job Type</option>'+types.map(function(t){ return '<option value="'+esc(t)+'">'+esc(t)+'</option>'; }).join('')+'<option value="__other">Other&#8230;</option>';
   el.onchange = function(){
-    if(this.value==='__other'){
-      var v = prompt('Enter job type:');
-      if(v){ var o=document.createElement('option'); o.value=v; o.text=v; this.add(o,this.options.length-1); this.value=v; }
-      else this.value='';
-    }
+    if(this.value==='__other'){ this.value='Other'; }
   };
 }
 function vendorLabel(v){
